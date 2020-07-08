@@ -22,7 +22,7 @@ For receiving responses from API calls please use http method __GET__
 
 If endpoint required parameters you will need to send them as `query string`
 
-####Error messages V1 format:
+#### Error messages V1 format:
 ___
 ```json
 {
@@ -32,9 +32,9 @@ ___
 }
 ```
 ___
-###Terminology
+### Terminology
 
-####Pair:
+#### Pair:
 
 `Stock` - currency that you want to buy or sell
 
@@ -51,7 +51,7 @@ ___
 `Ask` - sell order
 
 ___
-###Market Info
+### Market Info
 
 ```
 GET /api/v1/public/markets
@@ -86,7 +86,7 @@ NONE
 ```
 ___
 
-###Market Activity
+### Market Activity
 
 ```
 GET /api/v1/public/tickers
@@ -126,7 +126,7 @@ NONE
 ```
 ___
 
-###Single market activity
+### Single market activity
 
 ```
 GET /api/v1/public/ticker?market=ETH_BTC
@@ -162,3 +162,43 @@ market | String | **Yes** | Available market. Example: BTC_USDT
 ```
 ___
 
+
+### Kline
+
+```
+GET /api/v1/public/ticker?market=BTC_USDT&interval=1h
+```
+This endpoint retrieves information about kline for the market.
+
+**Response is cached for:**
+_1 second_
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+market | String | **Yes** | Available market. Example: BTC_USDT
+start | Timestamp | **No** | Start time in seconds, default value is current start day. Example: 1596848400
+end | Timestamp | **No** | End time in seconds, default value is current time. Example: 1596927600
+interval | String | **Yes** | Possible values - 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "",
+  "result": [
+    [
+        594166400,             // Time in seconds
+        "9257.4",              // Open
+        "9243.19",             // Close
+        "9265.14",             // High
+        "9231.32",             // Low
+        "817.535991",          // Volume stock
+        "7558389.54233595"     // Volume money
+    ],
+    [...]
+  ]
+}
+```
+___
