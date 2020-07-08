@@ -54,7 +54,7 @@ ___
 ### Market Info
 
 ```
-GET /api/v1/public/markets
+[GET] /api/v1/public/markets
 ```
 This endpoint retrieves all information about markets for trading.
 
@@ -89,7 +89,7 @@ ___
 ### Market Activity
 
 ```
-GET /api/v1/public/tickers
+[GET] /api/v1/public/tickers
 ```
 This endpoint retrieves information about recent trading activity for the market.
 
@@ -129,7 +129,7 @@ ___
 ### Single market activity
 
 ```
-GET /api/v1/public/ticker?market=ETH_BTC
+[GET] /api/v1/public/ticker?market=ETH_BTC
 ```
 This endpoint retrieves information about recent trading activity for the market.
 
@@ -166,7 +166,7 @@ ___
 ### Kline
 
 ```
-GET /api/v1/public/ticker?market=BTC_USDT&interval=1h
+[GET] /api/v1/public/ticker?market=BTC_USDT&interval=1h
 ```
 This endpoint retrieves information about kline for the market.
 
@@ -206,7 +206,7 @@ ___
 ### Symbols
 
 ```
-GET /api/v1/public/symbols
+[GET] /api/v1/public/symbols
 ```
 This endpoint retrieves all available markets for trading.
 
@@ -234,7 +234,7 @@ ___
 ### Order depth
 
 ```
-GET /api/v1/public/depth/result?market=BTC_USDT
+[GET] /api/v1/public/depth/result?market=BTC_USDT
 ```
 This will return the current order book as two arrays (bids / asks)
 
@@ -242,6 +242,7 @@ This will return the current order book as two arrays (bids / asks)
 _1 second_
 
 **Parameters:**
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 market | String | **Yes** | Available market. Example: BTC_USDT
@@ -280,7 +281,7 @@ ___
 ### Trade History
 
 ```
-GET /api/v1/public/history?market=BTC_USDT&lastId=1
+[GET] /api/v1/public/history?market=BTC_USDT&lastId=1
 ```
 This will return the trades that have executed recently for requested market.
 
@@ -288,6 +289,7 @@ This will return the trades that have executed recently for requested market.
 _1 second_
 
 **Parameters:**
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 market | String | **Yes** | Available market. Example: BTC_USDT
