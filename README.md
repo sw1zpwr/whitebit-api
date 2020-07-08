@@ -24,7 +24,7 @@ If endpoint required parameters you will need to send them as `query string`
 
 #### Error messages V1 format:
 ___
-```json
+```json5
 {
     "success": false,
     "message": "ERROR MESSAGE",
@@ -62,7 +62,7 @@ This endpoint retrieves all information about markets for trading.
 NONE
 
 **Response:**
-```json
+```json5
 {
   "success": true,
   "message": "",
@@ -100,7 +100,7 @@ _1 second_
 NONE
 
 **Response:**
-```json
+```json5
 {
   "success": true,
   "message": "",
@@ -143,7 +143,7 @@ Name | Type | Mandatory | Description
 market | String | **Yes** | Available market. Example: BTC_USDT
 
 **Response:**
-```json
+```json5
 {
   "success": true,
   "message": "",
@@ -183,7 +183,7 @@ end | Timestamp | **No** | End time in seconds, default value is current time. E
 interval | String | **Yes** | Possible values - 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M
 
 **Response:**
-```json
+```json5
 {
   "success": true,
   "message": "",
@@ -217,7 +217,7 @@ _1 second_
 NONE
 
 **Response:**
-```json
+```json5
 {
   "success": true,
   "message": "",
@@ -249,7 +249,7 @@ limit | int | **No** | Limit of results. Default: 50 Example: 100
 
 
 **Response:**
-```json
+```json5
 {
   "asks": [
     [
@@ -296,7 +296,7 @@ limit | int | **No** | Limit of results. Default: 50 Example: 100
 
 
 **Response:**
-```json
+```json5
 {
   "success": true,
   "message": "",
