@@ -2,11 +2,11 @@
 
 ## Public endpoints V1
 
-* [Market info](#service)
-* [Market activity](#kline)
-* [Single market activity](#last-price)
-* [Kline](#market-statistics)
-* [Symbols](#market-statistics-for-current-day-utc)
+* [Market info](#market-info)
+* [Market activity](#market-activity)
+* [Single market activity](#single-market-activity)
+* [Kline](#kline)
+* [Symbols](#symbols)
 * [Order depth](#market-trades)
 * [Trade history](#market-depth)
     
@@ -198,6 +198,34 @@ interval | String | **Yes** | Possible values - 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h
         "7558389.54233595"     // Volume money
     ],
     [...]
+  ]
+}
+```
+___
+
+### Symbols
+
+```
+GET /api/v1/public/symbols
+```
+This endpoint retrieves all available markets for trading.
+
+**Response is cached for:**
+_1 second_
+
+**Parameters:**
+NONE
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "",
+  "result": [
+    "BTC_USDT",      // Name of market pair
+    "ETH_BTC",       // Name of market pair
+    "ETH_USDT",      // Name of market pair
+    ...
   ]
 }
 ```
