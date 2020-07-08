@@ -303,7 +303,7 @@ limit | int | **No** | Limit of results. Default: 50 Example: 100
   "result": [
     {
       "id": 156720314,              // Deal id
-      "type": "sell",               // Deal type ("buy" or "sell")
+      "type": "sell",               // Deal type (buy or sell)
       "time": 1594240477.849703,    // Deal time in seconds
       "amount": "0.002784",         // Deal amount
       "price": "9429.66"            // Deal price
