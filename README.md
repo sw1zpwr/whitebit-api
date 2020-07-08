@@ -7,8 +7,8 @@
 * [Single market activity](#single-market-activity)
 * [Kline](#kline)
 * [Symbols](#symbols)
-* [Order depth](#market-trades)
-* [Trade history](#market-depth)
+* [Order depth](#order-depth)
+* [Trade history](#trade-history)
     
 Base endpoint is https://whitebit.com
 
@@ -104,7 +104,7 @@ NONE
 {
   "success": true,
   "message": "",
-  "result": [
+  "result": {
     "BTC_USDT": {                         // Name of market pair
       "at": 1594232194,                   // Timestamp in seconds
       "ticker": {
@@ -118,10 +118,10 @@ NONE
         "change": "1.53"                  // Change in percent between open and last prices
       }
     },
-    {
+    "ETH_BTC": {
       ...
     }
-  ]
+  }
 }
 ```
 ___
@@ -272,6 +272,50 @@ limit | int | **No** | Limit of results. Default: 50 Example: 100
       "0.669249"           // Amount of next ask
     ],
     [...]
+  ]
+}
+```
+___
+
+### Trade History
+
+```
+GET /api/v1/public/history?market=BTC_USDT&lastId=1
+```
+This will return the trades that have executed recently for requested market.
+
+**Response is cached for:**
+_1 second_
+
+**Parameters:**
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+market | String | **Yes** | Available market. Example: BTC_USDT
+lastId | int | **Yes** | Largest id of last returned result. Example: 1
+limit | int | **No** | Limit of results. Default: 50 Example: 100
+
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "",
+  "result": [
+    {
+      "id": 156720314,              // Deal id
+      "type": "sell",               // Deal type ("buy" or "sell")
+      "time": 1594240477.849703,    // Deal time in seconds
+      "amount": "0.002784",         // Deal amount
+      "price": "9429.66"            // Deal price
+    },
+    {
+      "id": 156720309,
+      "type": "sell",
+      "time": 1594240476.832347,
+      "amount": "0.002455",
+      "price": "9429.66"
+    },
+    {...}
   ]
 }
 ```
