@@ -230,3 +230,49 @@ NONE
 }
 ```
 ___
+
+### Order depth
+
+```
+GET /api/v1/public/depth/result?market=BTC_USDT
+```
+This will return the current order book as two arrays (bids / asks)
+
+**Response is cached for:**
+_1 second_
+
+**Parameters:**
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+market | String | **Yes** | Available market. Example: BTC_USDT
+limit | int | **No** | Limit of results. Default: 50 Example: 100
+
+
+**Response:**
+```json
+{
+  "asks": [
+    [
+      "9431.9",            // Price of lowest bid
+      "0.705088"           // Amount of lowest bid
+    ],
+    [
+      "9433.67",           // Price of next bid
+      "0.324509"           // Amount of next bid
+    ],
+    [...]
+  ],
+  "bids": [
+    [
+      "9427.65",           // Price of highest ask
+      "0.547909"           // Amount of highest ask
+    ],
+    [
+      "9427.3",            // Price of next ask
+      "0.669249"           // Amount of next ask
+    ],
+    [...]
+  ]
+}
+```
+___
