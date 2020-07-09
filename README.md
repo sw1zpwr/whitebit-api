@@ -14,17 +14,21 @@
         2. Click on API keys tab
         3. Choose what kind of keys do you need to generate for different API calls
         4. Generate keys and turn them on
-    2. Auth request should include:
-        1. Body data - JSON that includes:
-            1. 'request' - request path without domain name. Example: `'/api/v4/trade-account/balance'`
-            2. 'nonce' - is a number that is always **higher** than the previous request nonce number. Example: `'1594297865'`
-            3. params of request - Example: `'ticker': 'BTC'`
+    2. Auth request must send with `POST` method and should include:
+        1. Body data - **JSON** that includes:
+            1. **'request'** - request path without domain name. Example: `'/api/v4/trade-account/balance'`
+            2. **'nonce'** - is a number that is always **higher** than the previous request nonce number. Example: `'1594297865'` or you can use `time()` function of your language that returns current timestamp.
+            3. **params of request** - Example: `'ticker': 'BTC'`
         2. Headers:
             1. `'Content-type': 'application/json'`
             2. `'X-TXC-APIKEY': api_key` - where api_key is your public WhiteBit API key
             3. `'X-TXC-PAYLOAD': payload'` - where payload is base64-encoded body data
             4. `'X-TXC-SIGNATURE': signature` - where signature is `hex(HMAC_SHA512(base64(payload), key=api_secret))`
-    3. For creating your first requests - you can use [API Quick start helper](https://github.com/whitebit-exchange/api-quickstart) library
+    3. For creating your first requests - you can use [API Quick start helper](https://github.com/whitebit-exchange/api-quickstart) library. It supports such languages like:
+        1. ``Go``
+        2. ``NodeJS``
+        3. ``Python``
+        4. ``PHP``
 
 ___
 
