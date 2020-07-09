@@ -1,4 +1,4 @@
-#Official Documentation of WhiteBIT rest API
+# Official Documentation of WhiteBIT rest API
 
 ## Info
 
