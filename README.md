@@ -2,29 +2,29 @@
 
 ## Info
 
-1. The API docks supports `private` and `public` methods
-2. API versions: `V1`, `V2`, `V4`
-3. For public endpoints please use this information:
-    1. Public endpoints are cached. (Time of caching you can see in the doc)
-    2. Use HTTP method `GET` when making a request
+1. WhiteBIT API supports `private` and `public` methods.
+2. Available API versions: `V1`, `V2`, `V4`.
+3. Using **Public endpoints**:
+    1. Public endpoints are cached. You can find specific cache refresh interval for each particular request in API documentation.
+    2. Use HTTP method `GET` when making a request.
     3. Use `query string` if you need to send additional data.
-4. Private endpoints:
-    1. For making a private API calls:
-        1. Please goto your personal cabinet on exchange
-        2. Click on API keys tab
-        3. Choose what kind of keys do you need to generate for different API calls
-        4. Generate keys and turn them on
-    2. Auth request must send with `POST` method and should include:
+4. Using **Private endpoints**:
+    1. For making private API calls:
+        1. Please go to your personal cabinet on whitebit.com.
+        2. Click on the API keys tab.
+        3. Select appropriate configuration tab for your API keys. Different API keys allow access to different API calls.
+        4. Generate API keys and toggle activation switcher to "Activated".
+    2. Auth request should be using `POST` method and should include:
         1. Body data - **JSON** that includes:
-            1. **'request'** - request path without domain name. Example: `'/api/v4/trade-account/balance'`
-            2. **'nonce'** - is a number that is always **higher** than the previous request nonce number. Example: `'1594297865'` or you can use `time()` function of your language that returns current timestamp.
+            1. **'request'** - request path without domain name. Example: `'/api/v4/trade-account/balance'`.
+            2. **'nonce'** - a number that is always **higher** than the previous request nonce number. Example: `'1594297865'`. A good trick to create the nonce is to use the unix timestamp in milliseconds. This way you'll always get an incrementing number, just be careful to not send two API calls at the same time or they will have the same nonce.
             3. **params of request** - Example: `'ticker': 'BTC'`
         2. Headers:
             1. `'Content-type': 'application/json'`
             2. `'X-TXC-APIKEY': api_key` - where api_key is your public WhiteBit API key
             3. `'X-TXC-PAYLOAD': payload'` - where payload is base64-encoded body data
             4. `'X-TXC-SIGNATURE': signature` - where signature is `hex(HMAC_SHA512(base64(payload), key=api_secret))`
-    3. For creating your first requests - you can use [API Quick start helper](https://github.com/whitebit-exchange/api-quickstart) library. It supports such languages like:
+    3. To help you get started with our API, we've created [API Quick start helper](https://github.com/whitebit-exchange/api-quickstart) library. It supports the following languages:
         1. ``Go``
         2. ``NodeJS``
         3. ``Python``
@@ -49,5 +49,3 @@ ___
 [Private API V2 Documentation](/Public/http-public-v1-doc.md)
 
 [Private API V4 Documentation](/Public/http-public-v1-doc.md)
-
-    

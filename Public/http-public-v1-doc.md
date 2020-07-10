@@ -10,17 +10,17 @@
 * [Order depth](#order-depth)
 * [Trade history](#trade-history)
     
-Base endpoint is https://whitebit.com
+Base URL is https://whitebit.com
 
-Example how to use: https://whitebit.com/api/v1/{endpoint}
+Endpoint example: https://whitebit.com/api/v1/{endpoint}
 
 All endpoints return time in Unix-time format.
 
-All endpoints return either a __JSON__ object array.
+All endpoints return either a __JSON__ object or array.
 
 For receiving responses from API calls please use http method __GET__
 
-If endpoint required parameters you will need to send them as `query string`
+If an endpoint requires parameters you should send them as `query string`
 
 #### Error messages V1 format:
 ___
@@ -56,7 +56,7 @@ ___
 ```
 [GET] /api/v1/public/markets
 ```
-This endpoint retrieves all information about markets for trading.
+This endpoint retrieves all information about available markets.
 
 **Response is cached for:**
 _1 second_
@@ -78,8 +78,8 @@ NONE
       "stockPrec": "6",        // Precision of stock currency
       "feePrec": "4",          // Precision of fee
       "minAmount": "0.001",    // Minimal amount of stock to trade
-      "makerFee": "0.001",     // Default maker fee
-      "takerFee": "0.001"      // Default taker fee
+      "makerFee": "0.001",     // Default maker fee ratio
+      "takerFee": "0.001"      // Default taker fee ratio
     },
     {
       ...
@@ -94,7 +94,7 @@ ___
 ```
 [GET] /api/v1/public/tickers
 ```
-This endpoint retrieves information about recent trading activity for the market.
+This endpoint retrieves information about recent trading activity on all markets.
 
 **Response is cached for:**
 _1 second_
@@ -134,7 +134,7 @@ ___
 ```
 [GET] /api/v1/public/ticker?market=ETH_BTC
 ```
-This endpoint retrieves information about recent trading activity for the market.
+This endpoint retrieves information about recent trading activity on the requested market.
 
 **Response is cached for:**
 _1 second_
@@ -171,7 +171,7 @@ ___
 ```
 [GET] /api/v1/public/ticker?market=BTC_USDT&interval=1h
 ```
-This endpoint retrieves information about kline for the market.
+This endpoint retrieves information about market kline.
 
 **Response is cached for:**
 _1 second_
@@ -211,7 +211,7 @@ ___
 ```
 [GET] /api/v1/public/symbols
 ```
-This endpoint retrieves all available markets for trading.
+This endpoint retrieves information about all available markets for trading.
 
 **Response is cached for:**
 _1 second_
@@ -239,7 +239,7 @@ ___
 ```
 [GET] /api/v1/public/depth/result?market=BTC_USDT
 ```
-This will return the current order book as two arrays (bids / asks)
+This endpoint retrieves the current order book as two arrays (bids / asks)
 
 **Response is cached for:**
 _1 second_
@@ -286,7 +286,7 @@ ___
 ```
 [GET] /api/v1/public/history?market=BTC_USDT&lastId=1
 ```
-This will return the trades that have executed recently for requested market.
+This endpoint retrieves trades that have been executed for the requested market.
 
 **Response is cached for:**
 _1 second_
