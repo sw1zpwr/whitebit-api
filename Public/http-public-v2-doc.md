@@ -4,11 +4,10 @@
 
 * [Market info](#market-info)
 * [Market activity](#market-activity)
-* [Single market activity](#single-market-activity)
-* [Kline](#kline)
-* [Symbols](#symbols)
-* [Order depth](#order-depth)
-* [Trade history](#trade-history)
+* [Recent Trades](#recent-trades)
+* [Fee](#fee)
+* [Asset Status List](#Asset Status List)
+* [Orderbook](#orderbook)
     
 Base endpoint is https://whitebit.com
 
@@ -91,6 +90,43 @@ NONE
 ```
 ___
 
+### Market activity
+
+```
+[GET] /api/v2/public/ticker
+```
+This endpoint retrieves information about recent trading activity for the market.
+
+**Response is cached for:**
+_1 second_
+
+**Parameters:**
+NONE
+
+**Response:**
+```json5
+{
+  "success": true,
+  "message": "",
+  "result": [
+    {
+      "lastUpdateTimestamp": "2020-07-10T13:37:27.000Z",     // Timestamp of last update
+      "tradingPairs": "ETH_BTC",                             // Name of market pair
+      "lastPrice": "0.026014",                               // Last deal price
+      "lowestAsk": "0.026027",                               // Lowest ask price
+      "highestBid": "0.026001",                              // Highest bid price
+      "baseVolume24h": "13445.988",                          // Volume in stock currency
+      "quoteVolume24h": "350.113082102",                     // Volume in money currency
+      "tradesEnabled": true                                  // Is trading enabled on exchange
+    },
+    {
+      ...
+    }
+  ]
+}
+```
+___
+
 ### Recent Trades
 
 ```
@@ -151,10 +187,10 @@ NONE
 ```
 ___
 
-### Symbols
+### Asset Status List
 
 ```
-[GET] /api/v1/public/symbols
+[GET] /api/v2/public/assets
 ```
 This will return the trades that have executed recently for requested market.
 
@@ -171,15 +207,15 @@ NONE
   "message": "",
   "result": {
     "BTC": {
-      "id": "4f37bc79-f612-4a63-9a81-d37f7f9ff622",           // Asset id
-      "lastUpdateTimestamp": "2020-07-09T14:20:05.000Z",      // Timestamp of last update
-      "name": "Bitcoin",                                      // Name of currency
-      "canWithdraw": true,                                    // Is currency withdrawable
-      "canDeposit": true,                                     // Is currency depositable
-      "minWithdrawal": "0.001",                               // Minimal amount to withdraw
-      "maxWithdrawal": "0",                                   // Maximum amount to withdraw
-      "makerFee": "0.1",                                      // Default maker fee percent number
-      "takerFee": "0.1"                                       // Default taker fee percent number
+      "id": "4f37bc79-f612-4a63-9a81-d37f7f9ff622",         //  Asset id
+      "lastUpdateTimestamp": "2020-07-10T13:20:07.000Z",    // Timestamp of last update
+      "name": "Bitcoin",                                    // Name of currency
+      "canWithdraw": true,                                  // Is currency withdrawable
+      "canDeposit": true,                                   // Is currency depositable
+      "minWithdrawal": "0.001",                             // Minimal amount to withdraw
+      "maxWithdrawal": "0",                                 // Maximum amount to withdraw
+      "makerFee": "0.1",                                    // Maker fee for currency
+      "takerFee": "0.1"                                     // Taker fee for currency
     },
     {...}
   }
@@ -230,51 +266,6 @@ NONE
       ],
       [...]
   },
-}
-```
-___
-
-### Trade History
-
-```
-[GET] /api/v1/public/history?market=BTC_USDT&lastId=1
-```
-This will return the trades that have executed recently for requested market.
-
-**Response is cached for:**
-_1 second_
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-market | String | **Yes** | Available market. Example: BTC_USDT
-lastId | int | **Yes** | Largest id of last returned result. Example: 1
-limit | int | **No** | Limit of results. Default: 50 Example: 100
-
-
-**Response:**
-```json5
-{
-  "success": true,
-  "message": "",
-  "result": [
-    {
-      "id": 156720314,              // Deal id
-      "type": "sell",               // Deal type (buy or sell)
-      "time": 1594240477.849703,    // Deal time in seconds
-      "amount": "0.002784",         // Deal amount
-      "price": "9429.66"            // Deal price
-    },
-    {
-      "id": 156720309,
-      "type": "sell",
-      "time": 1594240476.832347,
-      "amount": "0.002455",
-      "price": "9429.66"
-    },
-    {...}
-  ]
 }
 ```
 ___
