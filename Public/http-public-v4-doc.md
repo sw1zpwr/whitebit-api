@@ -52,7 +52,7 @@ ___
 
 ### Ticker 
 
-(need to resole)
+(need to resolve)
 
 ```
 [GET] /api/v4/public/ticker
@@ -63,10 +63,7 @@ The ticker endpoint is to provide a 24-hour pricing and volume summary for each 
 _1 second_
 
 **Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-type | String | **No** | Query buy side or sell side only. Can be sell or buy only
+NONE
 
 **Response:**
 ```json5
