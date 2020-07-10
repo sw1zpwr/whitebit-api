@@ -6,7 +6,7 @@
 * [Market activity](#market-activity)
 * [Recent Trades](#recent-trades)
 * [Fee](#fee)
-* [Asset Status List](#Asset Status List)
+* [Asset Status List](#asset-status-list)
 * [Orderbook](#orderbook)
     
 Base endpoint is https://whitebit.com
