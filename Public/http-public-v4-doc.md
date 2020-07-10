@@ -2,13 +2,11 @@
 
 ## Public endpoints V1
 
-* [Market info](#market-info)
-* [Market activity](#market-activity)
-* [Single market activity](#single-market-activity)
-* [Kline](#kline)
-* [Symbols](#symbols)
-* [Order depth](#order-depth)
-* [Trade history](#trade-history)
+* [Ticker](#ticker)
+* [Assets](#assets)
+* [Orderbook](#orderbook)
+* [Recent Trades](#recent-trades)
+
     
 Base URL is https://whitebit.com
 
@@ -52,7 +50,9 @@ ___
 
 ___
 
-### Ticker (need to resole)
+### Ticker 
+
+(need to resole)
 
 ```
 [GET] /api/v4/public/ticker
