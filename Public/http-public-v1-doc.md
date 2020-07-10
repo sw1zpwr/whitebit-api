@@ -257,23 +257,23 @@ limit | int | **No** | Limit of results. Default: 50 Example: 100
 {
   "asks": [
     [
-      "9431.9",            // Price of lowest bid
-      "0.705088"           // Amount of lowest bid
+      "9431.9",            // Price of lowest ask
+      "0.705088"           // Amount of lowest ask
     ],
     [
-      "9433.67",           // Price of next bid
-      "0.324509"           // Amount of next bid
+      "9433.67",           // Price of next ask
+      "0.324509"           // Amount of next ask
     ],
     [...]
   ],
   "bids": [
     [
-      "9427.65",           // Price of highest ask
-      "0.547909"           // Amount of highest ask
+      "9427.65",           // Price of highest bid
+      "0.547909"           // Amount of highest bid
     ],
     [
-      "9427.3",            // Price of next ask
-      "0.669249"           // Amount of next ask
+      "9427.3",            // Price of next bid
+      "0.669249"           // Amount of next bid
     ],
     [...]
   ]

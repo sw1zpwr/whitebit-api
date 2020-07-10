@@ -36,9 +36,9 @@ ___
 
 [Public API V1 Documentation](/Public/http-public-v1-doc.md) - General endpoints
 
-[Public API V2 Documentation](/Public/http-public-v1-doc.md) - Endpoints for cmc
+[Public API V2 Documentation](/Public/http-public-v2-doc.md) - Endpoints for cmc
 
-[Public API V4 Documentation](/Public/http-public-v1-doc.md) - Additional endpoints
+[Public API V4 Documentation](/Public/http-public-v4-doc.md) - Additional endpoints
 
 ___
 
