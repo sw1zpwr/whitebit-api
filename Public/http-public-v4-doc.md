@@ -52,8 +52,6 @@ ___
 
 ### Ticker 
 
-(need to resolve)
-
 ```
 [GET] /api/v4/public/ticker
 ```
@@ -67,25 +65,17 @@ NONE
 
 **Response:**
 ```json5
-[
-  {
-    "tradeID": 158092490,                   // Deal id
-    "price": "9235.71",                     // Deal price
-    "base_volume": "9235.71",               // Deal volume in stock
-    "quote_volume": "0.047233",             // Deal volume in money
-    "trade_timestamp": 1594395768,          // Time in seconds
-    "type": "buy"                           // Deal side
-  },
-  {
-    "tradeID": 158092486,
-    "price": "9235.71",
-    "base_volume": "9235.71",
-    "quote_volume": "0.0472",
-    "trade_timestamp": 1594395767,
-    "type": "sell"
+{
+  "BTC_USDT": {
+    "base_id": 1,                           // CoinmarketCap Id of base currency 0 - if unknown
+    "quote_id": 825,                        // CoinmarketCap Id of quote currency 0 - if unknown
+    "last_price": "9164.09",                // Last price
+    "quote_volume": "43341942.90416876",    // Volume in quote currency
+    "base_volume": "4723.286463",           // Volume in base currency
+    "isFrozen": false                       // Trades are closed
   },
   {...}
-]
+}
 ```
 ___
 
