@@ -1,6 +1,6 @@
-# Public HTTP API V1
+# Public HTTP API V2
 
-## Public endpoints V1
+## Public endpoints V2
 
 * [Market info](#market-info)
 * [Market activity](#market-activity)
@@ -11,7 +11,7 @@
     
 Base endpoint is https://whitebit.com
 
-Example how to use: https://whitebit.com/api/v2/{endpoint}
+Example how to use: https://whitebit.com/api/v2/public/{endpoint}
 
 All endpoints return time in Unix-time format.
 
@@ -21,7 +21,7 @@ For receiving responses from API calls please use http method __GET__
 
 If endpoint required parameters you will need to send them as `query string`
 
-#### Error messages V1 format:
+#### Error messages V2 format:
 ___
 ```json5
 {

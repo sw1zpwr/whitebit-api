@@ -1,6 +1,6 @@
-# Public HTTP API V1
+# Public HTTP API V4
 
-## Public endpoints V1
+## Public endpoints V4
 
 * [Ticker](#ticker)
 * [Assets](#assets)
@@ -10,7 +10,7 @@
     
 Base URL is https://whitebit.com
 
-Endpoint example: https://whitebit.com/api/v1/{endpoint}
+Endpoint example: https://whitebit.com/api/v4/public/{endpoint}
 
 All endpoints return time in Unix-time format.
 
@@ -20,7 +20,7 @@ For receiving responses from API calls please use http method __GET__
 
 If an endpoint requires parameters you should send them as `query string`
 
-#### Error messages V1 format:
+#### Error messages V4 format:
 ___
 ```json5
 {

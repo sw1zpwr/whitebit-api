@@ -12,7 +12,7 @@
     
 Base URL is https://whitebit.com
 
-Endpoint example: https://whitebit.com/api/v1/{endpoint}
+Endpoint example: https://whitebit.com/api/v1/public/{endpoint}
 
 All endpoints return time in Unix-time format.
 
