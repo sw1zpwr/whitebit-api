@@ -234,8 +234,9 @@ price | String | **Yes** | Price in money currency. Example: '9800'
     "type": "limit"                    // order type
 }
 ```
+<details>
+<summary>**Errors:**</summary>
 
-**Errors:**
 ```json5
 {
     "code": 0,
@@ -304,6 +305,7 @@ price | String | **Yes** | Price in money currency. Example: '9800'
     "message": "Validation failed"
 }
 ```
+</details>
 ___
 
 ### Kline
