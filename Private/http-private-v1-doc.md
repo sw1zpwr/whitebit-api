@@ -334,6 +334,6 @@ price | String | **Yes** | Price in money currency. Example: '9800'
 }
 
 ```
-
 </details>
+
 ___
