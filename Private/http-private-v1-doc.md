@@ -89,7 +89,9 @@ currency | String | **Yes** | Currency's ticker. Example: BTC
 }
 ```
 
-**Errors:**
+<details>
+<summary><b>Errors:</b></summary>
+
 ```json5
 {
     "message": [
@@ -113,6 +115,7 @@ currency | String | **Yes** | Currency's ticker. Example: BTC
     "success": false
 }
 ```
+</details>
 ___
 
 ### Trading balances
