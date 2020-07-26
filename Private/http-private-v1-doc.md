@@ -308,165 +308,32 @@ price | String | **Yes** | Price in money currency. Example: '9800'
     "message": "Validation failed"
 }
 ```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "amount": [
+            "Not enough balance"
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "amount": [
+            "Given amount is less than min amount - 0.001",
+            "Min amount step = 0.000001"
+        ]
+    },
+    "message": "Validation failed"
+}
+
+```
+
 </details>
-___
-
-### Kline
-
-```
-[GET] /api/v1/public/ticker?market=BTC_USDT&interval=1h
-```
-This endpoint retrieves information about market kline.
-
-**Response is cached for:**
-_1 second_
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-market | String | **Yes** | Available market. Example: BTC_USDT
-start | Timestamp | **No** | Start time in seconds, default value is current start day. Example: 1596848400
-end | Timestamp | **No** | End time in seconds, default value is current time. Example: 1596927600
-interval | String | **Yes** | Possible values - 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M
-
-**Response:**
-```json5
-{
-  "success": true,
-  "message": "",
-  "result": [
-    [
-        594166400,             // Time in seconds
-        "9257.4",              // Open
-        "9243.19",             // Close
-        "9265.14",             // High
-        "9231.32",             // Low
-        "817.535991",          // Volume stock
-        "7558389.54233595"     // Volume money
-    ],
-    [...]
-  ]
-}
-```
-___
-
-### Symbols
-
-```
-[GET] /api/v1/public/symbols
-```
-This endpoint retrieves information about all available markets for trading.
-
-**Response is cached for:**
-_1 second_
-
-**Parameters:**
-NONE
-
-**Response:**
-```json5
-{
-  "success": true,
-  "message": "",
-  "result": [
-    "BTC_USDT",      // Name of market pair
-    "ETH_BTC",       // Name of market pair
-    "ETH_USDT",      // Name of market pair
-    ...
-  ]
-}
-```
-___
-
-### Order depth
-
-```
-[GET] /api/v1/public/depth/result?market=BTC_USDT
-```
-This endpoint retrieves the current order book as two arrays (bids / asks)
-
-**Response is cached for:**
-_1 second_
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-market | String | **Yes** | Available market. Example: BTC_USDT
-limit | int | **No** | Limit of results. Default: 50 Example: 100
-
-
-**Response:**
-```json5
-{
-  "asks": [
-    [
-      "9431.9",            // Price of lowest ask
-      "0.705088"           // Amount of lowest ask
-    ],
-    [
-      "9433.67",           // Price of next ask
-      "0.324509"           // Amount of next ask
-    ],
-    [...]
-  ],
-  "bids": [
-    [
-      "9427.65",           // Price of highest bid
-      "0.547909"           // Amount of highest bid
-    ],
-    [
-      "9427.3",            // Price of next bid
-      "0.669249"           // Amount of next bid
-    ],
-    [...]
-  ]
-}
-```
-___
-
-### Trade History
-
-```
-[GET] /api/v1/public/history?market=BTC_USDT&lastId=1
-```
-This endpoint retrieves trades that have been executed for the requested market.
-
-**Response is cached for:**
-_1 second_
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-market | String | **Yes** | Available market. Example: BTC_USDT
-lastId | int | **Yes** | Largest id of last returned result. Example: 1
-limit | int | **No** | Limit of results. Default: 50 Example: 100
-
-
-**Response:**
-```json5
-{
-  "success": true,
-  "message": "",
-  "result": [
-    {
-      "id": 156720314,              // Deal id
-      "type": "sell",               // Deal type (buy or sell)
-      "time": 1594240477.849703,    // Deal time in seconds
-      "amount": "0.002784",         // Deal amount
-      "price": "9429.66"            // Deal price
-    },
-    {
-      "id": 156720309,
-      "type": "sell",
-      "time": 1594240476.832347,
-      "amount": "0.002455",
-      "price": "9429.66"
-    },
-    {...}
-  ]
-}
-```
 ___
