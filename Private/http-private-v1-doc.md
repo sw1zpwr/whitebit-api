@@ -333,3 +333,117 @@ price | String | **Yes** | Price in money currency. Example: '9800'
 </details>
 
 ___
+
+### Cancel order
+
+```
+[POST] /api/v1/order/cancel
+```
+Cancel existing order
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+market | String | **Yes** | Available market. Example: BTC_USDT
+orderId | Int | **Yes** | Order Id. Example: 4180284841
+
+**Request BODY raw:**
+```json5
+{
+    "market": "BTC_USDT",
+    "orderId": 4180284841,
+    "request": "{{request}}",
+    "nonce": "{{nonce}}"
+}
+```
+
+**Response:**
+```json5
+{
+    "amount": "0.001",                 // amount
+    "dealFee": "0",                    // fee in money that you pay if order is finished
+    "dealMoney": "0",                  // if order finished - amount in money currency that finished
+    "dealStock": "0",                  // if order finished - amount in stock currency that finished
+    "left": "0.001",                   // if order not finished - rest of amount that must be finished
+    "makerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero    
+    "market": "BTC_USDT",              // deal market
+    "orderId": 4180284841,             // order id
+    "price": "9800",                   // price
+    "side": "buy",                     // order type
+    "takerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero
+    "timestamp": 1595792396.165973,    // current timestamp
+    "type": "limit"                    // order type
+}
+```
+<details>
+<summary><b>Errors:</b></summary>
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "market": [
+            "The market field is required."
+        ],
+        "orderId": [
+            "The order id field is required."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 2,
+    "errors": {
+        "order_id": [
+            "Unexecuted order was not found."
+        ]
+    },
+    "message": "Inner validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "market": [
+            "Market is not available"
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "orderId": [
+            "The order id must be an integer."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "market": [
+            "The market must be a string.",
+            "The market format is invalid.",
+            "Market is not available"
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+</details>
+
+___
