@@ -235,7 +235,7 @@ price | String | **Yes** | Price in money currency. Example: '9800'
 }
 ```
 <details>
-<summary>**Errors:**</summary>
+**<summary>Errors:</summary>**
 
 ```json5
 {
