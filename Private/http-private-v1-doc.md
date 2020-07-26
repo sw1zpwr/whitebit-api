@@ -5,10 +5,6 @@
 * [Trading balance by currency](#trading-balance-by-currency)
 * [Trading balances](#trading-balances)
 * [Create limit order](#create-limit-order)
-* [Kline](#kline)
-* [Symbols](#symbols)
-* [Order depth](#order-depth)
-* [Trade history](#trade-history)
     
 Base URL is https://whitebit.com
 
