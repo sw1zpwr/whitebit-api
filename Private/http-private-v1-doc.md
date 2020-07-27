@@ -7,6 +7,7 @@
 * [Create limit order](#create-limit-order)
 * [Cancel order](#cancel-order)
 * [Query unexecuted orders](#query-unexecuted-orders)
+* [Query order history](query-order-history)
     
 Base URL is https://whitebit.com
 
@@ -520,6 +521,131 @@ offset | Int | **No** | If you want the query to return entries starting from a 
         ]
     },
     "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit must be an integer."
+        ],
+        "offset": [
+            "The offset must be an integer."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit may not be greater than 100."
+        ],
+        "offset": [
+            "The offset may not be greater than 10000."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit must be at least 1."
+        ],
+        "offset": [
+            "The offset must be at least 0."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+</details>
+
+___
+
+
+### Query order history
+
+```
+[POST] /api/v1/account/order_history
+```
+Returns orders history by all markets
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+market | String | **No** | Required available market. Example: BTC_USDT
+limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 100, Min: 1, Max: 100
+offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+
+**Request BODY raw:**
+```json5
+{
+    "offset": 0,
+    "limit": 100,
+    "request": "{{request}}",
+    "nonce": "{{nonce}}"
+}
+```
+
+**Response:**
+```json5
+{
+    "message": "",
+    "result": {
+        "BTC_USDT": [
+            {
+                "amount": "0.70326019",           // executed order amount
+                "ctime": 1594667731.724387,       // executed order creating time
+                "dealFee": "0",                   // executed order fee that user pay
+                "dealMoney": "0.70407996",        // executed order amount in money
+                "dealStock": "0.000076",          // executed order amount in stock
+                "ftime": 1594667731.724403,       // executed order finish time
+                "id": 3711942768,                 // executed order ID
+                "makerFee": "0.001",              // maker fee ratio. If the number less than 0.0001 - its rounded to zero
+                "market": "BTC_USDT",             // mair
+                "marketName": "BTC_USDT",         // market name
+                "price": "0",                     // executed order price, if executed order type is market it 0
+                "side": "sell",                   // executed order side
+                "takerFee": "0.001",              // taker fee ratio. If the number less than 0.0001 - its rounded to zero 
+                "type": "market"                  // executed order type
+            }
+        ],
+        "DBTC_DUSDT": [
+            {...}
+        ],
+        "ETH_USDT": [
+            {...}
+        ]
+    },
+    "success": true
+}
+
+```
+<details>
+<summary><b>Errors:</b></summary>
+
+```json5
+{
+    "message": {
+        "market": [
+            "The market must be a string.",
+            "The market format is invalid."
+        ]
+    },
+    "result": [],
+    "success": false
 }
 ```
 
