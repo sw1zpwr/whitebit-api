@@ -17,8 +17,6 @@ All endpoints return either a __JSON__ object or array.
 
 For receiving responses from API calls please use http method __POST__
 
-If an endpoint requires parameters you should send them as `query string`
-
 #### Error messages V1 format:
 ___
 ```json5
@@ -47,7 +45,7 @@ ___
 
 `Ask` - sell order
 
-`Limit order` - order that has price, amount fields required for fill. If this order will find other order with opposite side - he will finish him. If not - he gets into orderbook.
+`Limit order` - to place this order, you need to fill the 'Price' and 'Amount' fields. If this order finds a corresponding order on the opposite side, it will be executed. Otherwise it will be placed into the orderbook.
 
 ___
 ### Trading balance by currency
