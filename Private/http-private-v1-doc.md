@@ -7,7 +7,7 @@
 * [Create limit order](#create-limit-order)
 * [Cancel order](#cancel-order)
 * [Query unexecuted orders](#query-unexecuted-orders)
-* [Query order history](query-order-history)
+* [Query order history](#query-order-history)
     
 Base URL is https://whitebit.com
 
