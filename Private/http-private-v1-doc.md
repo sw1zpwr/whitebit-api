@@ -446,3 +446,127 @@ orderId | Int | **Yes** | Order Id. Example: 4180284841
 </details>
 
 ___
+
+### Query unexecuted orders
+
+```
+[POST] /api/v1/orders
+```
+Returns unexecuted(active) orders
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+market | String | **Yes** | Available market. Example: BTC_USDT
+limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 100, Min: 1, Max: 100
+offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+
+**Request BODY raw:**
+```json5
+{
+    "market": "BTC_USDT",
+    "offset": 0,
+    "limit": 100,
+    "request": "{{request}}",
+    "nonce": "{{nonce}}"
+}
+```
+
+**Response:**
+```json5
+[
+    {
+        "amount": "2.241379",             // active order amount
+        "dealFee": "0",                   // executed fee by deal
+        "dealMoney": "0",                 // executed amount in money
+        "dealStock": "0",                 // executed amount in stock
+        "left": "2.241379",               // unexecuted amount in stock
+        "makerFee": "0.001",              // maker fee ratio. If the number less than 0.0001 - its rounded to zero    
+        "market": "BTC_USDT",             // currency market
+        "orderId": 3686033640,            // unexecuted order ID
+        "price": "7900",                  // unexecuted order price
+        "side": "buy",                    // type of order
+        "takerFee": "0.001",              // taker fee ratio. If the number less than 0.0001 - its rounded to zero    
+        "timestamp": 1594605801.49815,    // current timestamp of unexecuted order
+        "type": "limit"                   // unexecuted order type
+    },
+    {...}
+]
+
+```
+<details>
+<summary><b>Errors:</b></summary>
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "market": [
+            "The market field is required."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "market": [
+            "Market is not available"
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit must be an integer."
+        ],
+        "offset": [
+            "The offset must be an integer."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit may not be greater than 100."
+        ],
+        "offset": [
+            "The offset may not be greater than 10000."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit must be at least 1."
+        ],
+        "offset": [
+            "The offset must be at least 0."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+</details>
+
+___
