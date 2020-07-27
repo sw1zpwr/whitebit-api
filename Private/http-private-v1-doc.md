@@ -6,6 +6,7 @@
 * [Trading balances](#trading-balances)
 * [Create limit order](#create-limit-order)
 * [Cancel order](#cancel-order)
+* [Query unexecuted orders](#query-unexecuted-orders)
     
 Base URL is https://whitebit.com
 
