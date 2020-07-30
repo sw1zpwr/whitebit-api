@@ -579,13 +579,13 @@ ___
 ```
 [POST] /api/v1/account/order_history
 ```
-Returns orders history by all markets
+Returns orders history sorted by all markets
 
 **Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-market | String | **No** | Required available market. Example: BTC_USDT
+market | String | **No** | Requested available market. Example: BTC_USDT
 limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 100, Min: 1, Max: 100
 offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
@@ -661,6 +661,232 @@ offset | Int | **No** | If you want the query to return entries starting from a 
         ]
     },
     "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit may not be greater than 100."
+        ],
+        "offset": [
+            "The offset may not be greater than 10000."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit must be at least 1."
+        ],
+        "offset": [
+            "The offset must be at least 0."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+</details>
+
+___
+
+### Query executed order history by single market
+
+```
+[POST] /api/v1/account/executed_history
+```
+Returns orders history sorted by single market
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+market | String | **Yes** | Requested available market. Example: BTC_USDT
+limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 100, Min: 1, Max: 100
+offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+
+**Request BODY raw:**
+```json5
+{
+    "market": "BTC_USDT",
+    "offset": 0,
+    "limit": 100,
+    "request": "{{request}}",
+    "nonce": "{{nonce}}"
+}
+```
+
+**Response:**
+```json5
+{
+    "message": "",
+    "result": [
+        {
+            "amount": "0.000076",         // amount in stock
+            "deal": "0.70407996",         // amount in money
+            "fee": "0.00070407996",       // fee that you pay 
+            "id": 160305483,              // orderID
+            "price": "9264.21",           // price
+            "role": 2,                    // Role - 1 - maker, 2 - taker
+            "side": "sell",               // Order side "sell" / "buy"
+            "time": 1594667731.724403     // Timestamp of executed order
+        },
+        {...}
+      ],
+    "success": true
+}
+
+
+```
+<details>
+<summary><b>Errors:</b></summary>
+
+```json5
+{
+    "message": {
+        "market": [
+            "The market must be a string.",
+            "The market format is invalid."
+        ]
+    },
+    "result": [],
+    "success": false
+}
+```
+
+```json5
+{
+    "message": {
+        "market": [
+            "The market field is required."
+        ]
+    },
+    "result": [],
+    "success": false
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit may not be greater than 100."
+        ],
+        "offset": [
+            "The offset may not be greater than 10000."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit must be at least 1."
+        ],
+        "offset": [
+            "The offset must be at least 0."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+</details>
+
+___
+
+
+### Query executed order history by single all markets
+
+```
+[POST] /api/v1/account/executed_history/all
+```
+Returns orders history sorted by single market
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+market | String | **Yes** | Requested available market. Example: BTC_USDT
+limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 100, Min: 1, Max: 100
+offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+
+**Request BODY raw:**
+```json5
+{
+    "market": "BTC_USDT",
+    "offset": 0,
+    "limit": 100,
+    "request": "{{request}}",
+    "nonce": "{{nonce}}"
+}
+```
+
+**Response:**
+```json5
+{
+    "message": "",
+    "result": {
+        "BTC_USDT": [
+            {
+                "amount": "0.000076",         // amount in stock
+                "deal": "0.70407996",         // amount in money
+                "fee": "0.00070407996",       // fee that you pay 
+                "id": 160305483,              // orderID
+                "price": "9264.21",           // price
+                "role": 2,                    // Role - 1 - maker, 2 - taker
+                "side": "sell",               // Order side "sell" / "buy"
+                "time": 1594667731.724403     // Timestamp of executed order
+            },
+            {...},
+        ],
+        "DBTC_DUSDT": [
+            {...}
+        ]
+    },
+    "success": true
+}
+
+
+```
+<details>
+<summary><b>Errors:</b></summary>
+
+```json5
+{
+    "message": {
+        "market": [
+            "The market must be a string.",
+            "The market format is invalid."
+        ]
+    },
+    "result": [],
+    "success": false
+}
+```
+
+```json5
+{
+    "message": {
+        "market": [
+            "The market field is required."
+        ]
+    },
+    "result": [],
+    "success": false
 }
 ```
 

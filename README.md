@@ -44,7 +44,7 @@ ___
 
 ## Private api
 
-[Private API V1 Documentation](/Public/http-public-v1-doc.md)
+[Private API V1 Documentation](/Private/http-private-v1-doc.md)
 
 [Private API V2 Documentation](/Public/http-public-v1-doc.md)
 
