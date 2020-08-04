@@ -25,7 +25,8 @@
             3. `'X-TXC-PAYLOAD': payload'` - where payload is base64-encoded body data
             4. `'X-TXC-SIGNATURE': signature` - where signature is `hex(HMAC_SHA512(base64(payload), key=api_secret))`
         3. Errors:
-            "Too many requests." - "Too many requests." - this error means that the “nonce” in your current request is equal or smaller than the one in the previous request
+            
+            **"Too many requests."** - this error means that the **“nonce”** in your current request is equal or smaller than the one in the previous request.
             ___
             ```json5
             {
@@ -39,7 +40,7 @@
             }
             ```
             ___
-            "Invalid payload" - that means that the data which you provided in the body of the  request didn't match the base64-decoded payload.
+            **"Invalid payload"** - that means that the data which you provided in the body of the  request didn't match the **base64-decoded** payload.
             ___
             ```json5
             {
@@ -53,7 +54,7 @@
             }
             ```
             ___
-            "Unauthorized request." - request signed incorrectly.
+            **"Unauthorized request."** - request signed incorrectly.
             ___
             ```json5
             {
@@ -67,7 +68,7 @@
             }
             ```
             ___ 
-            "Nonce not provided." - you need to provide "nonce" in the body request.
+            **"Nonce not provided."** - you need to provide **"nonce"** in the body request.
             ___
             ```json5
             {
@@ -81,7 +82,7 @@
             }
             ```
             ___ 
-            "Request not provided." - you need to provide "request" in the body request
+            **"Request not provided."** - you need to provide **"request"** in the body request
             ___
             ```json5
             {
