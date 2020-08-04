@@ -6,18 +6,18 @@
 2. Available API versions: `V1`, `V2`, `V4`.
 3. Using **Public endpoints**:
     1. Public endpoints are cached. You can find specific cache refresh interval for each particular request in API documentation.
-    2. Use HTTP method `GET` when making a request.
+    2. Use HTTP method `GET` method when making a request.
     3. Use `query string` if you need to send additional data.
 4. Using **Private endpoints**:
-    1. For making private API calls:
-        1. Please go to your personal cabinet on whitebit.com.
+    1. To make private API calls:
+        1. Go to your account on whitebit.com.
         2. Click on the API keys tab.
-        3. Select appropriate configuration tab for your API keys. Different API keys allow access to different API calls.
-        4. Generate API keys and toggle activation switcher to "Activated".
+        3. Select the appropriate configuration tab for your API keys. Different API keys allow access to different API calls.
+        4. Generate API keys and toggle the activation switcher to "Activated".
     2. Auth request should be using `POST` method and should include:
         1. Body data - **JSON** that includes:
-            1. **'request'** - request path without domain name. Example: `'/api/v4/trade-account/balance'`.
-            2. **'nonce'** - a number that is always **higher** than the previous request nonce number. Example: `'1594297865'`. A good trick to create the nonce is to use the unix timestamp in milliseconds. This way you'll always get an incrementing number, just be careful to not send two API calls at the same time or they will have the same nonce.
+            1. **'request'** - a request path without the domain name. Example: `'/api/v4/trade-account/balance'`.
+            2. **'nonce'** - a number that is always **larger** than the previous request’s nonce number. Example: `'1594297865'`. A good method of creating a **nonce** is to use the unix timestamp in milliseconds. This way you'll always get an incrementing number, but make sure not to send two API calls at the same time, otherwise their nonce will be identical.
             3. **params of request** - Example: `'ticker': 'BTC'`
         2. Headers:
             1. `'Content-type': 'application/json'`
@@ -26,7 +26,7 @@
             4. `'X-TXC-SIGNATURE': signature` - where signature is `hex(HMAC_SHA512(base64(payload), key=api_secret))`
         3. Errors:
             
-            **"Too many requests."** - this error means that the **“nonce”** in your current request is equal or smaller than the one in the previous request.
+            **"Too many requests."** - this error means that the **“nonce”** in your current request is equal or is smaller than the one in the previous request.
             ___
             ```json5
             {
@@ -68,7 +68,7 @@
             }
             ```
             ___ 
-            **"Nonce not provided."** - you need to provide **"nonce"** in the body request.
+            **"Nonce not provided."** - you need to provide a **"nonce"** in the body request.
             ___
             ```json5
             {
@@ -82,7 +82,7 @@
             }
             ```
             ___ 
-            **"Request not provided."** - you need to provide **"request"** in the body request
+            **"Request not provided."** - you need to provide a **"request"** in the body request
             ___
             ```json5
             {
@@ -96,7 +96,7 @@
             }
             ```
             ___ 
-    3. To help you get started with our API, we've created [API Quick start helper](https://github.com/whitebit-exchange/api-quickstart) library. It supports the following languages:
+    3. To help you get started with our API, we've created the [API Quick start helper](https://github.com/whitebit-exchange/api-quickstart) library. It supports the following languages:
         1. ``Go``
         2. ``NodeJS``
         3. ``Python``
