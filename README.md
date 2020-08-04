@@ -118,8 +118,6 @@ ___
 
 ## Private api
 
-[Private API V1 Documentation](/Private/http-private-v1-doc.md)
+[Private API V1 Documentation](/Private/http-private-v1-doc.md) - Private api documentation of trading possibilities
 
-[Private API V2 Documentation](/Public/http-public-v1-doc.md)
-
-[Private API V4 Documentation](/Public/http-public-v1-doc.md)
+[Private API V4 Documentation](/Public/http-private-v4-doc.md)
