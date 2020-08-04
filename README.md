@@ -1,5 +1,24 @@
 # Official Documentation of WhiteBIT rest API
 
+
+___
+
+## Public api
+
+[Public API V1 Documentation](/Public/http-public-v1-doc.md) - General endpoints
+
+[Public API V2 Documentation](/Public/http-public-v2-doc.md) - Endpoints for cmc
+
+[Public API V4 Documentation](/Public/http-public-v4-doc.md) - Additional endpoints
+
+___
+
+## Private api
+
+[Private API V1 Documentation](/Private/http-private-v1-doc.md) - Private api documentation of trading possibilities
+
+[Private API V4 Documentation](/Public/http-private-v4-doc.md)
+
 ## Info
 
 1. WhiteBIT API supports `private` and `public` methods.
@@ -103,21 +122,3 @@
         4. ``PHP``
         4. ``Java``
         4. ``Kotlin``
-
-___
-
-## Public api
-
-[Public API V1 Documentation](/Public/http-public-v1-doc.md) - General endpoints
-
-[Public API V2 Documentation](/Public/http-public-v2-doc.md) - Endpoints for cmc
-
-[Public API V4 Documentation](/Public/http-public-v4-doc.md) - Additional endpoints
-
-___
-
-## Private api
-
-[Private API V1 Documentation](/Private/http-private-v1-doc.md) - Private api documentation of trading possibilities
-
-[Private API V4 Documentation](/Public/http-private-v4-doc.md)
