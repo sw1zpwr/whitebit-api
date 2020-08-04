@@ -461,7 +461,7 @@ Returns unexecuted(active) orders
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 market | String | **Yes** | Available market. Example: BTC_USDT
-limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 100, Min: 1, Max: 100
+limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
 offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 **Request BODY raw:**
@@ -586,7 +586,7 @@ Returns orders history sorted by all markets
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 market | String | **No** | Requested available market. Example: BTC_USDT
-limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 100, Min: 1, Max: 100
+limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
 offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 **Request BODY raw:**
@@ -710,7 +710,7 @@ Returns orders history sorted by single market
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 market | String | **Yes** | Requested available market. Example: BTC_USDT
-limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 100, Min: 1, Max: 100
+limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
 offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 **Request BODY raw:**
@@ -821,7 +821,7 @@ Returns orders history sorted by single market
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 market | String | **Yes** | Requested available market. Example: BTC_USDT
-limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 100, Min: 1, Max: 100
+limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
 offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 **Request BODY raw:**
@@ -902,6 +902,120 @@ offset | Int | **No** | If you want the query to return entries starting from a 
         ]
     },
     "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit must be at least 1."
+        ],
+        "offset": [
+            "The offset must be at least 0."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+</details>
+
+___
+
+### Query executed order deals
+
+```
+[POST] /api/v1/account/order
+```
+Returns more detail order deals history 
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+orderId | Int | **Yes** | Order ID. Example: 1234
+limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
+offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+
+**Request BODY raw:**
+```json5
+{
+    "orderId": 3135554375,
+    "offset": 0,
+    "limit": 100,
+    "request": "{{request}}",
+    "nonce": "{{nonce}}"
+}
+```
+
+**Response:**
+
+Empty response if order not yours
+```json5
+{
+    "message": "",
+    "result": {
+        "limit": 50,
+        "offset": 0,
+        "records": [
+            {
+                "amount": "598",                // amount in stock
+                "deal": "0.00419198",           // amount in money
+                "dealOrderId": 3134995325,      // completed order ID
+                "fee": "0.00000419198",         // fee that you pay 
+                "id": 149156519,                // id of trade
+                "price": "0.00000701",          // price
+                "role": 2,                      // Role - 1 - maker, 2 - taker
+                "time": 1593342324.613711       // Timestamp of executed order
+            }
+        ]
+    },
+    "success": true
+}
+
+
+```
+<details>
+<summary><b>Errors:</b></summary>
+
+```json5
+{
+    "message": {
+        "orderId": [
+            "The order id field is required."
+        ]
+    },
+    "result": [],
+    "success": false
+}
+```
+
+```json5
+{
+    "message": {
+        "orderId": [
+            "The order id must be an integer."
+        ]
+    },
+    "result": [],
+    "success": false
+}
+```
+
+```json5
+{
+    "message": {
+        "limit": [
+            "The limit may not be greater than 100."
+        ],
+        "offset": [
+            "The offset may not be greater than 10000."
+        ]
+    },
+    "result": [],
+    "success": false
 }
 ```
 
