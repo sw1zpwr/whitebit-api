@@ -1,26 +1,26 @@
 # Private HTTP API Authenticate
 
-##How to use:
+## How to use:
 
 1. Go to your account on whitebit.com.
 2. Click on the API keys tab.
 3. Select the appropriate configuration tab for your API keys. Different API keys allow access to different API calls.
 4. Generate API keys and toggle the activation switcher to "Activated".
 
-##Requirements:
+## Requirements:
 
 Auth request should be using `POST` method and should include:
 1. [Body data](#body-data)
 2. [Headers](#headers)
 
-###Body data
+### Body data
 
 **JSON** that includes:
 1. **'request'** - a request path without the domain name. Example: `'/api/v4/trade-account/balance'`.
 2. **'nonce'** - a number that is always **larger** than the previous request’s nonce number. Example: `'1594297865'`. A good method of creating a **nonce** is to use the unix timestamp in milliseconds. This way you'll always get an incrementing number, but make sure not to send two API calls at the same time, otherwise their nonce will be identical.
 3. **params of request** - Example: `'ticker': 'BTC'`
 
-###Headers
+### Headers
 
 With every request you need to provide next **headers**:
 1. `'Content-type': 'application/json'`
@@ -28,7 +28,7 @@ With every request you need to provide next **headers**:
 3. `'X-TXC-PAYLOAD': payload'` - where payload is base64-encoded body data
 4. `'X-TXC-SIGNATURE': signature` - where signature is `hex(HMAC_SHA512(payload), key=api_secret))`
 
-###Errors:
+### Errors:
     
 **"Too many requests."** - this error means that the **“nonce”** in your current request is equal or is smaller than the one in the previous request.
 
