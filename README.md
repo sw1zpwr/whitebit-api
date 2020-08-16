@@ -17,9 +17,11 @@ ___
 
 [Private API Authentication Documentation](/Private/http-private-auth-doc.md) - Documentation for making private Auth requests on WhiteBIT
 
-[Private API V1 Documentation](/Private/http-private-v1-doc.md) - Documentations for making private trading requests
+[Private API V1 Documentation Trade keys](/Private/http-private-v1-doc.md) - Documentations for making private trading requests
 
-[Private API V4 Documentation](/Public/http-private-v4-doc.md)
+[Private API V4 Documentation Trade keys](/Public/http-private-v4-doc.md) - Documentations for making private trading requests (updated)
+
+[Private API V4 Documentation Deposit/Withdraw keys](/Public/http-private-v4-doc.md) - Documentations for making private trading & deposit/withdraw requests
 
 ## Info
 
