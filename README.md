@@ -15,7 +15,9 @@ ___
 
 ## Private api
 
-[Private API V1 Documentation](/Private/http-private-v1-doc.md) - Private api documentation of trading possibilities
+[Private API Authentication Documentation](/Private/http-private-auth-doc.md) - Documentation for making private Auth requests on WhiteBIT
+
+[Private API V1 Documentation](/Private/http-private-v1-doc.md) - Documentations for making private trading requests
 
 [Private API V4 Documentation](/Public/http-private-v4-doc.md)
 
@@ -42,79 +44,7 @@ ___
             1. `'Content-type': 'application/json'`
             2. `'X-TXC-APIKEY': api_key` - where api_key is your public WhiteBit API key
             3. `'X-TXC-PAYLOAD': payload'` - where payload is base64-encoded body data
-            4. `'X-TXC-SIGNATURE': signature` - where signature is `hex(HMAC_SHA512(base64(payload), key=api_secret))`
-        3. Errors:
-            
-            **"Too many requests."** - this error means that the **“nonce”** in your current request is equal or is smaller than the one in the previous request.
-            ___
-            ```json5
-            {
-                "message": [
-                    [
-                        "Too many requests."
-                    ]
-                ],
-                "result": [],
-                "success": false
-            }
-            ```
-            ___
-            **"Invalid payload"** - that means that the data which you provided in the body of the  request didn't match the **base64-decoded** payload.
-            ___
-            ```json5
-            {
-                 "message": [
-                     [
-                         "Invalid payload."
-                     ]
-                 ],
-                 "result": [],
-                 "success": false
-            }
-            ```
-            ___
-            **"Unauthorized request."** - request signed incorrectly.
-            ___
-            ```json5
-            {
-                "message": [
-                    [
-                        "Unauthorized request."
-                    ]
-                ],
-                "result": [],
-                "success": false
-            }
-            ```
-            ___ 
-            **"Nonce not provided."** - you need to provide a **"nonce"** in the body request.
-            ___
-            ```json5
-            {
-                "message": [
-                    [
-                        "Nonce not provided."
-                    ]
-                ],
-                "result": [],
-                "success": false
-            }
-            ```
-            ___ 
-            **"Request not provided."** - you need to provide a **"request"** in the body request
-            ___
-            ```json5
-            {
-                "message": [
-                    [
-                        "Request not provided."
-                    ]
-                ],
-                "result": [],
-                "success": false
-            }
-            ```
-            ___ 
+            4. `'X-TXC-SIGNATURE': signature` - where signature is `hex(HMAC_SHA512(payload), key=api_secret))`
     3. To help you get started with our API, we've created the [API Quick start helper](https://github.com/whitebit-exchange/api-quickstart) library. It supports the following languages:
         1. ``Go``
         2. ``NodeJS``
