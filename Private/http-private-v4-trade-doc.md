@@ -80,6 +80,7 @@ Available statuses:
 
 ```json5
 {
+    "...": {...},
     "BTC": {
         "available": "0.123",      // Available balance of currency for trading
         "freeze": "1"              // Balance of currency on orders
@@ -88,7 +89,8 @@ Available statuses:
     "XMR": {
         "available": "3013",
         "freeze": "100"
-    }
+    },
+    "...": {...}
 }
 ```
 
