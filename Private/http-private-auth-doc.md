@@ -28,6 +28,19 @@ With every request you need to provide next **headers**:
 3. `'X-TXC-PAYLOAD': payload'` - where payload is base64-encoded body data
 4. `'X-TXC-SIGNATURE': signature` - where signature is `hex(HMAC_SHA512(payload), key=api_secret))`
 
+
+### Examples of auth
+
+To help you get started with our API, we've created the [API Quick start helper](https://github.com/whitebit-exchange/api-quickstart) library. It supports the following languages:
+```json5
+1. Python
+2. PHP
+3. JavaScript
+4. Go
+5. Kotlin
+6. Java
+```
+
 ### Errors:
     
 **"Too many requests."** - this error means that the **“nonce”** in your current request is equal or is smaller than the one in the previous request.
