@@ -23,6 +23,8 @@ ___
 
 [Private API V4 Documentation Deposit/Withdraw keys](/Public/http-private-v4-doc.md) - Documentations for making private trading & deposit/withdraw requests (Not Ready)
 
+---
+
 ## Info
 
 1. WhiteBIT API supports `private` and `public` methods.
