@@ -1,6 +1,6 @@
 # Private HTTP API V4
 
-## Private endpoints V4
+## Private endpoints V4 for trading
 
 * [Trading balance](#trading-balance-by-currency)
 * [Create limit order](#create-limit-order)
