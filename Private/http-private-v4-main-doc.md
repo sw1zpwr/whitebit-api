@@ -550,7 +550,7 @@ Response error codes:
 
 ```json5
 [
-                                // empty array - has success status - goto deposit/withdraw history and check you request status by uniqueId
+                                // empty array - has success status
 ]
 ```
 <details>
