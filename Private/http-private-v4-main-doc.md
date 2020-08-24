@@ -70,7 +70,7 @@ ___
 
 `Main balance` - balance on exchange that accept deposits and withdraws.
 
-`Memo` - some currencies like XLM can create only one address for exchange. So for detecting witch transaction is your exchanges use additional data - called memo for transactions.
+`Memo` - some currencies like XLM can create only one address for exchange. So for detecting witch transaction is your exchanges use additional data - memo.
 
 
 ___
