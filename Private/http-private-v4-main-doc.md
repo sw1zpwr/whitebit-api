@@ -56,6 +56,17 @@ ___
 
 `Limit order` - to place this order, you need to fill the 'Price' and 'Amount' fields. If this order finds a corresponding order on the opposite side, it will be executed. Otherwise it will be placed into the orderbook.
 
+`Fiat` - is a currency (a medium of exchange) established as money, often by government regulation, but that does not have intrinsic value (value independent of the nominal value, such as a precious metal might have).
+
+`Provider` - fiat currencies has different providers that helps people making deposits and withdraws by bank transfers.
+
+`Multinetwork` - cryptocurrency like USDT obtained in different networks, like: OMNI, Tron, Ethereum etc. If we need to make deposits and withdraws on for example on USDT we need to choose the network.
+
+`Main balance` - balance on exchange that accept deposits and withdraws.
+
+`Memo` - some currencies like XLM can create only one address for exchange. So for understanding witch transaction is your exchanges use additional data - called memo for transactions.
+
+
 ___
 ### Main balance
 
