@@ -228,7 +228,7 @@ price | String | **Yes** | Price in money currency. Example: '9800'
     "market": "BTC_USDT",              // deal market
     "orderId": 4180284841,             // order id
     "price": "9800",                   // price
-    "side": "buy",                     // order type
+    "side": "buy",                     // order side
     "takerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero
     "timestamp": 1595792396.165973,    // current timestamp
     "type": "limit"                    // order type
