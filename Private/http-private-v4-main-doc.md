@@ -8,6 +8,7 @@
 * [Create withdraw request](#create-withdraw-request)
 * [Transfer between main and trade balances](#transfer-between-main-and-trade-balances)
 * [Get deposit/withdraw history](#get-depositwithdraw-history)
+* [Create new address for deposit](#create-new-address-for-deposit)
     
 Base URL is https://whitebit.com
 
@@ -238,7 +239,7 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 ticker | String | **Yes** | Currencies ticker. Example: UAH ⚠ Currencies ticker should be: not cypto and has "can_deposit" status must be "true". Use this [url](https://whitebit.com/api/v4/public/assets) to know more about currency.
 provider | String | **Yes** | Fiat currency provider. Example: VISAMASTER ⚠ Currency provider should be taken from https://whitebit.com/api/v4/public/assets response.
-amount | String | **Yes** | Deposit amount.
+amount | Numeric String | **Yes** | Deposit amount.
 uniqueId | String | **Yes** | Unique transaction identifier on client side.
 
 **Request BODY raw:**
@@ -377,7 +378,7 @@ Create withdraw for specified ticker
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 ticker | String | **Yes** | Currencies ticker. Example: BTC ⚠ Currencies ticker should be: not cypto and has "can_deposit" status must be "true". Use this [url](https://whitebit.com/api/v4/public/assets) to know more about currency.
-amount | String | **Yes** | Deposit amount.
+amount | Numeric string | **Yes** | Deposit amount.
 address | String | **Yes** | Target address (wallet address for cryptocurrencies, some identifier/card number for fiat currencies)
 memo | String | **Yes, if currency is memoable** | Target address (wallet address for cryptocurrencies, some identifier/card number for fiat currencies)
 uniqueId | String | **Yes** | Unique transaction identifier on client side.
@@ -531,7 +532,7 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 method | String | **Yes** | Method. Example: **deposit** if need to transfer from main to trade / **withdraw** if need transfer from trade balance to main
 ticker | String | **Yes** | Currency's ticker. Example: BTC
-amount | String | **Yes** | Amount to transfer. Max precision = 8, value should be greater than zero and your balance.
+amount | Numeric string | **Yes** | Amount to transfer. Max precision = 8, value should be greater than zero and your balance.
 
 **Request BODY raw:**
 ```json5
@@ -814,6 +815,113 @@ Withdraw status codes:
         ],
         "offset": [
             "The offset must be an integer."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+</details>
+
+___
+
+### Create new address for deposit
+
+```
+[POST] /api/v4/main-account/create-new-address
+```
+This endpoint should be used to create new address even when last created address is not used. This endpoint is not available by default, you need to contact support@whitebit.com for getting such permissions.
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+ticker | String | **Yes** | Currency's ticker. Example: BTC
+network | String | **No** | Currency's network if it multinetwork currency. Example: USDT_OMNI. For USDT default network is ETH.
+
+
+**Request BODY raw:**
+```json5
+{
+    "ticker": "XLM",
+    "request": "{{request}}",
+    "nonce": "{{nonce}}"
+}
+```
+
+**Response:**
+Available statuses:
+* `Status 201 if all validations succeeded and creating transaction is started`
+* `Status 400 if request validation failed`
+* `Status 422 if inner validation failed`
+
+```json5
+{
+    "account": {
+        "address": "GDTSOI56XNVAKJNJBLJGRNZIVOCIZJRBIDKTWSCYEYNFAZEMBLN75RMN",        // deposit address
+        "memo": "48565488244493"                                                      // memo if currency is required memo
+    },
+    "required": {
+        "fixedFee": "0",                                                              // fixed deposit fee
+        "flexFee": {                                                                  // flexible fee - is fee that use percent rate
+            "maxFee": "0",                                                            // maximum fixed fee that you will pay
+            "minFee": "0",                                                            // minimum fixed fee that you will pay
+            "percent": "0"                                                            // percent of deposit that you will pay
+        },
+        "maxAmount": "0",                                                             // max amount of deposit that accepted by exchange - if you will deposit more then that number it won't be accepted by exchange 
+        "minAmount": "1"                                                              // min amount of deposit that accepted by exchange - if you will deposit less then that number it won't be accepted by exchange 
+    }
+}
+
+```
+<details>
+<summary><b>Errors:</b></summary>
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "ticker": [
+            "The ticker field is required."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "ticker": [
+            "The selected ticker is invalid."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "network": [
+            "Unsupported network"
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "network": [
+            "The network must be a string."
+        ],
+        "ticker": [
+            "The ticker must be a string."
         ]
     },
     "message": "Validation failed"
