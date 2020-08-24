@@ -7,7 +7,7 @@
 * [Get fiat deposit address](#get-fiat-deposit-address)
 * [Create withdraw request](#create-withdraw-request)
 * [Transfer between main and trade balances](#transfer-between-main-and-trade-balances)
-* [Get deposit/withdraw history](#Get deposit-withdraw history)
+* [Get deposit/withdraw history](#get-depositwithdraw-history)
     
 Base URL is https://whitebit.com
 
