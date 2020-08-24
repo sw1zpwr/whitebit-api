@@ -2,16 +2,12 @@
 
 ## Private endpoints V4 for Main balance changes
 
-* [Trading balance](#trading-balance)
-* [Create limit order](#create-limit-order)
-* [Create market order](#create-market-order)
-* [Create stop-limit order](#create-stop-limit-order)
-* [Create stop-market order](#create-stop-market-order)
-* [Cancel order](#cancel-order)
-* [Query unexecuted orders](#query-unexecuted-orders)
-* [Query executed order history](#query-executed-order-history)
-* [Query executed order deals](#query-executed-order-deals)
-* [Query executed orders by market](#query-executed-orders-by-market)
+* [Main balance](#main-balance)
+* [Get cryptocurrency deposit address](#get-cryptocurrency-deposit-address)
+* [Get fiat deposit address](#get-fiat-deposit-address)
+* [Create withdraw request](#create-withdraw-request)
+* [Transfer between main and trade balances](#transfer-between-main-and-trade-balances)
+* [Get deposit/withdraw history](#Get deposit-withdraw history)
     
 Base URL is https://whitebit.com
 
