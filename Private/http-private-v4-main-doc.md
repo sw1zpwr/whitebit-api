@@ -1164,7 +1164,7 @@ Available statuses:
         {
             "amount": "0.002",                                          // code amount
             "code": "WBe11f4fce-2a53-4edc-b195-66b693bd77e3ETH",        // code
-            "date": 1598296332,                                         // code timestamp
+            "date": 1598296332,                                         // code creation timestamp
             "status": "Activated",                                      // code status
             "ticker": "ETH"                                             // code ticker
         },
