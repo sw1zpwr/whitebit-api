@@ -9,6 +9,11 @@
 * [Transfer between main and trade balances](#transfer-between-main-and-trade-balances)
 * [Get deposit/withdraw history](#get-depositwithdraw-history)
 * [Create new address for deposit](#create-new-address-for-deposit)
+* Codes
+    * [Create code](#create-code)
+    * [Apply code](#apply-code)
+    * [Get my codes](#get-my-codes)
+    * [Get codes history](#get-codes-history)
     
 Base URL is https://whitebit.com
 
@@ -922,6 +927,408 @@ Available statuses:
         ],
         "ticker": [
             "The ticker must be a string."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+</details>
+
+___
+
+## Codes
+
+### Create code
+
+```
+[POST] /api/v4/main-account/codes
+```
+Create WhiteBIT code.
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+ticker | String | **Yes** | Currency's ticker. Example: BTC
+amount | Numeric string | **Yes** | Amount to transfer. Max precision = 8, value should be greater than zero and your main balance.
+passphrase | String | **No** | Passphrase that will used for applying codes. Max: 25 symbols.
+description | String | **No** | Description for code. Visible only for creator Max: 75 symbols.
+
+**Request BODY raw:**
+```json5
+{
+    "ticker" : "ETH",
+    "amount" : "0.002",
+    "passphrase": "someStrongPassphrase",
+    "description": "Some description", 
+    "request": "{{request}}",
+    "nonce": "{{nonce}}"
+}
+```
+
+**Response:**
+Available statuses:
+* `Status 201 if all validations succeeded and creating transaction is started`
+* `Status 400 if request validation failed`
+* `Status 422 if inner validation failed`
+
+Response error codes:
+* 0 - Fiat are available on the front-end only
+* 1 - currency is not withdrawable
+* 2 - specified address is invalid
+* 3 - too little amount
+* 4 - too little amount for payment system
+* 5 - balance not enough
+* 6 - amount is less than or equals fee
+
+```json5
+{
+    "code": "WBe11f4fce-2a53-4edc-b195-66b693bd77e3ETH",         // generated WhiteBIT code
+    "message": "Code was successfully created"
+}
+
+```
+<details>
+<summary><b>Errors:</b></summary>
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "amount": [
+            "The amount field is required."
+        ],
+        "ticker": [
+            "The ticker field is required."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "amount": [
+            "The amount must be a number.",
+            "Invalid number"
+        ],
+        "description": [
+            "The description must be a string."
+        ],
+        "passphrase": [
+            "The passphrase must be a string."
+        ],
+        "ticker": [
+            "The selected ticker is invalid."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "amount": [
+            "The amount must be at least 0."
+        ],
+        "description": [
+            "The description may not be greater than 75 characters."
+        ],
+        "passphrase": [
+            "The passphrase may not be greater than 25 characters."
+        ],
+        "ticker": [
+            "The selected ticker is invalid."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+</details>
+
+___
+
+### Apply code
+
+```
+[POST] /api/v4/main-account/codes/apply
+```
+Apply WhiteBIT code.
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+code | String | **Yes** | Code to be applied.
+passphrase | String | **No** | Shuld be provided if code was created with passphrase Max: 25 symbols.
+
+**Request BODY raw:**
+```json5
+{
+    "code" : "WBe11f4fce-2a53-4edc-b195-66b693bd77e3ETH",
+    "passphrase": "someStrongPassphrase",
+    "request": "{{request}}",
+    "nonce": "{{nonce}}"
+}
+```
+
+**Response:**
+Available statuses:
+* `Status 201 if all validations succeeded and creating transaction is started`
+* `Status 400 if request validation failed`
+* `Status 422 if inner validation failed`
+
+
+```json5
+{
+    "amount": "0.002",
+    "message": "Code was successfully applied",
+    "ticker": "ETH"
+}
+
+```
+<details>
+<summary><b>Errors:</b></summary>
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "code": [
+            "The code field is required."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "_token": null,
+    "errors": {
+        "code": [
+            "Incorrect code or passphrase"
+        ]
+    },
+    "notification": null,
+    "response": null,
+    "status": 422,
+    "warning": "Incorrect code or passphrase"
+}
+```
+
+</details>
+
+___
+
+### Get my codes
+
+```
+[POST] /api/v4/main-account/codes/my
+```
+Retuns list of WhiteBIT codes created by me
+
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 30, Min: 1, Max: 100
+offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+
+
+**Request BODY raw:**
+```json5
+{
+    "request": "{{request}}",
+    "nonce": "{{nonce}}"
+}
+```
+
+**Response:**
+Available statuses:
+* `Status 201 if all validations succeeded and creating transaction is started`
+* `Status 400 if request validation failed`
+* `Status 422 if inner validation failed`
+
+
+```json5
+{
+    "data": [
+        {
+            "amount": "0.002",                                          // code amount
+            "code": "WBe11f4fce-2a53-4edc-b195-66b693bd77e3ETH",        // code
+            "date": 1598296332,                                         // code timestamp
+            "status": "Activated",                                      // code status
+            "ticker": "ETH"                                             // code ticker
+        },
+        {...}
+    ],
+    "limit": 30,
+    "offset": 0,
+    "total": 15
+}
+
+
+```
+<details>
+<summary><b>Errors:</b></summary>
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit may not be greater than 100."
+        ],
+        "offset": [
+            "The offset may not be greater than 10000."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit must be at least 1."
+        ],
+        "offset": [
+            "The offset must be at least 0."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit must be an integer."
+        ],
+        "offset": [
+            "The offset must be an integer."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+</details>
+
+___
+
+### Get codes history
+
+```
+[POST] /api/v4/main-account/codes/history
+```
+Retuns whole codes history
+
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 30, Min: 1, Max: 100
+offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+
+
+**Request BODY raw:**
+```json5
+{
+    "request": "{{request}}",
+    "nonce": "{{nonce}}"
+}
+```
+
+**Response:**
+Available statuses:
+* `Status 201 if all validations succeeded and creating transaction is started`
+* `Status 400 if request validation failed`
+* `Status 422 if inner validation failed`
+
+
+```json5
+{
+    "data": [
+        {
+            "amount": "+0.002",                                           // code amount change - is created + is applied
+            "code": "WBe11f4fce-2a53-4edc-b195-66b693bd77e3ETH",          // code
+            "date": 1598296734,                                           // code activation timestamp
+            "status": "Activated",                                        // current code status
+            "ticker": "ETH"                                               // code ticker
+        },
+        {
+            "amount": "-0.002",                                           // code amount change - is created + is applied
+            "code": "WBe11f4fce-2a53-4edc-b195-66b693bd77e3ETH",          // code
+            "date": 1598296332,                                           // code creation timestamp
+            "status": "Activated",                                        // current code status
+            "ticker": "ETH"                                               // code ticker
+        },
+        {...}
+    ],
+    "limit": 100,
+    "offset": 0,
+    "total": 29
+}
+
+
+
+```
+<details>
+<summary><b>Errors:</b></summary>
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit may not be greater than 100."
+        ],
+        "offset": [
+            "The offset may not be greater than 10000."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit must be at least 1."
+        ],
+        "offset": [
+            "The offset must be at least 0."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit must be an integer."
+        ],
+        "offset": [
+            "The offset must be an integer."
         ]
     },
     "message": "Validation failed"
