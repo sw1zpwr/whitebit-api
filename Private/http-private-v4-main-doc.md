@@ -27,7 +27,16 @@ For receiving responses from API calls please use http method __POST__
 ___
 ```json5
 {
-    "message": "ERROR MESSAGE",
+    "code": 0,
+    "errors": {
+        "PARAM1": [
+            "MESSAGE"
+        ],
+        "PARAM2": [
+            "MESSAGE"
+        ]
+    },
+    "message": "MESSAGE"
 }
 ```
 ___
@@ -119,7 +128,7 @@ Available statuses:
 </details>
 ___
 
-### Get deposit address for crypto
+### Get cryptocurrency deposit address
 
 ```
 [POST] /api/v4/main-account/address
@@ -156,8 +165,8 @@ Available statuses:
     "required": {
         "fixedFee": "0",                                                              // fixed deposit fee
         "flexFee": {                                                                  // flexible fee - is fee that use percent rate
-            "maxFee": "0",                                                            // maximum of fee that you will pay
-            "minFee": "0",                                                            // minimum fee that you will pay
+            "maxFee": "0",                                                            // maximum fixed fee that you will pay
+            "minFee": "0",                                                            // minimum fixed fee that you will pay
             "percent": "0"                                                            // percent of deposit that you will pay
         },
         "maxAmount": "0",                                                             // max amount of deposit that accepted by exchange - if you will deposit more then that number it won't be accepted by exchange 
@@ -180,576 +189,12 @@ Available statuses:
 }
 ```
 
-</details>
-
-___
-
-### Create market order
-
-```
-[POST] /api/v4/order/market
-```
-Creates market trading order
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-market | String | **Yes** | Available market. Example: BTC_USDT
-side | String | **Yes** | Order type. Variables: 'buy' / 'sell' Example: 'buy'
-amount | String | **Yes** | ⚠️Amount of **`money`** currency to **buy** or amount in **`stock`** currency to **sell**. Example: '0.01' for buy and '0.0001' for sell.
-
-**Request BODY raw:**
 ```json5
 {
-    "market": "BTC_USDT",
-    "side": "buy",
-    "amount": "0.01",             // i want to buy 0.01 USDT
-    "request": "{{request}}",
-    "nonce": "{{nonce}}"
-}
-```
-
-```json5
-{
-    "market": "BTC_USDT",
-    "side": "sell",
-    "amount": "0.01",              // i want to sell 0.01 BTC
-    "request": "{{request}}",
-    "nonce": "{{nonce}}"
-}
-```
-
-**Response:**
-Available statuses:
-* `Status 200`
-* `Status 422 if inner validation failed`
-* `Status 503 if service temporary unavailable`
-
-```json5
-{
-    "amount": "0.001",                 // amount
-    "dealFee": "0",                    // fee in money that you pay if order is finished
-    "dealMoney": "0",                  // if order finished - amount in money currency that finished
-    "dealStock": "0",                  // if order finished - amount in stock currency that finished
-    "left": "0.001",                   // if order not finished - rest of amount that must be finished
-    "makerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero    
-    "market": "BTC_USDT",              // deal market
-    "orderId": 4180284841,             // order id
-    "side": "buy",                     // order type
-    "takerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero
-    "timestamp": 1595792396.165973,    // current timestamp
-    "type": "market"                   // order type
-}
-```
-<details>
-<summary><b>Errors:</b></summary>
-
-Error codes:
-* `1` - market disabled for trading
-* `2` - incorrect amount (it is less than or equals zero or its precision is too big)
-* `3` - incorrect price (it is less than or equals zero or its precision is too big)
-* `4` - incorrect taker fee (it is less than zero or its precision is too big)
-* `5` - incorrect maker fee (it is less than zero or its precision is too big)
-
-```json5
-{
-    "code": 0,
+    "code": 1,
     "errors": {
-        "amount": [
-            "The amount field is required."
-        ],
-        "market": [
-            "The market field is required."
-        ],
-        "side": [
-            "The side field is required."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "side": [
-            "The selected side is invalid."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "amount": [
-            "The amount must be a number."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "market": [
-            "Unknown market."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "amount": [
-            "Not enough balance"
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "amount": [
-            "Given amount is less than min amount - 0.001",
-            "Min amount step = 0.000001"
-        ]
-    },
-    "message": "Validation failed"
-}
-
-```
-</details>
-
-___
-
-### Create stop-limit order
-
-```
-[POST] /api/v4/order/stop_limit
-```
-Creates stop-limit trading order
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-market | String | **Yes** | Available market. Example: BTC_USDT
-side | String | **Yes** | Order type. Variables: 'buy' / 'sell' Example: 'buy'
-amount | String | **Yes** | Amount of stock currency to buy or sell. Example: '0.001'
-price | String | **Yes** | Price in money currency. Example: '9800'
-activation_price | String | **Yes** | Activation price in money currency. Example: '10000'
-
-**Request BODY raw:**
-```json5
-{
-    "market": "BTC_USDT",
-    "side": "buy",
-    "amount": "0.01",
-    "price": "9800",
-    "activation_price": "9800",
-    "request": "{{request}}",
-    "nonce": "{{nonce}}"
-}
-```
-
-**Response:**
-Available statuses:
-* `Status 200`
-* `Status 422 if inner validation failed`
-* `Status 503 if service temporary unavailable`
-
-```json5
-{
-    "activation_price": "11500",       // activation price
-    "amount": "0.001",                 // amount
-    "dealFee": "0",                    // fee in money that you pay if order is finished
-    "dealMoney": "0",                  // if order finished - amount in money currency that finished
-    "dealStock": "0",                  // if order finished - amount in stock currency that finished
-    "left": "0.001",                   // if order not finished - rest of amount that must be finished
-    "makerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero    
-    "market": "BTC_USDT",              // deal market
-    "orderId": 4180284841,             // order id
-    "price": "9800",                   // price
-    "side": "buy",                     // order type
-    "takerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero
-    "timestamp": 1595792396.165973,    // current timestamp
-    "type": "stop limit"               // order type
-}
-```
-<details>
-<summary><b>Errors:</b></summary>
-
-Error codes:
-* `1` - market disabled for trading
-* `2` - incorrect amount (it is less than or equals zero or its precision is too big)
-* `3` - incorrect price (it is less than or equals zero or its precision is too big)
-* `4` - incorrect taker fee (it is less than zero or its precision is too big)
-* `5` - incorrect maker fee (it is less than zero or its precision is too big)
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "activation_price": [
-            "The activation price field is required."
-        ],
-        "amount": [
-            "The amount field is required."
-        ],
-        "market": [
-            "The market field is required."
-        ],
-        "price": [
-            "The price field is required."
-        ],
-        "side": [
-            "The side field is required."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "side": [
-            "The selected side is invalid."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "amount": [
-            "The amount must be a number."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "price": [
-            "The price must be a number."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "activation_price": [
-            "The activation price must be a number."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "market": [
-            "Unknown market."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "amount": [
-            "Not enough balance"
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "amount": [
-            "Given amount is less than min amount - 0.001",
-            "Min amount step = 0.000001"
-        ]
-    },
-    "message": "Validation failed"
-}
-
-```
-</details>
-
-___
-
-### Create stop-market order
-
-```
-[POST] /api/v4/order/stop_market
-```
-Creates stop-market trading order
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-market | String | **Yes** | Available market. Example: BTC_USDT
-side | String | **Yes** | Order type. Variables: 'buy' / 'sell' Example: 'buy'
-amount | String | **Yes** | ⚠️Amount of **`money`** currency to **buy** or amount in **`stock`** currency to **sell**. Example: '0.01' for buy and '0.0001' for sell.
-activation_price | String | **Yes** | Activation price in money currency. Example: '10000'
-
-**Request BODY raw:**
-```json5
-{
-    "market": "BTC_USDT",
-    "side": "buy",
-    "amount": "0.01",              // i want to buy 0.01 USDT
-    "activation_price": "10000",
-    "request": "{{request}}",
-    "nonce": "{{nonce}}"
-}
-```
-```json5
-{
-    "market": "BTC_USDT",
-    "side": "sell",
-    "amount": "0.01",              // i want to sell 0.01 BTC
-    "activation_price": "10000",
-    "request": "{{request}}",
-    "nonce": "{{nonce}}"
-}
-```
-
-**Response:**
-Available statuses:
-* `Status 200`
-* `Status 422 if inner validation failed`
-* `Status 503 if service temporary unavailable`
-
-```json5
-{
-    "activation_price": "10000",       // activation price
-    "amount": "0.001",                 // amount
-    "dealFee": "0",                    // fee in money that you pay if order is finished
-    "dealMoney": "0",                  // if order finished - amount in money currency that finished
-    "dealStock": "0",                  // if order finished - amount in stock currency that finished
-    "left": "0.001",                   // if order not finished - rest of amount that must be finished
-    "makerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero    
-    "market": "BTC_USDT",              // deal market
-    "orderId": 4180284841,             // order id
-    "side": "buy",                     // order type
-    "takerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero
-    "timestamp": 1595792396.165973,    // current timestamp
-    "type": "stop market"              // order type
-}
-```
-<details>
-<summary><b>Errors:</b></summary>
-
-Error codes:
-* `1` - market disabled for trading
-* `2` - incorrect amount (it is less than or equals zero or its precision is too big)
-* `3` - incorrect price (it is less than or equals zero or its precision is too big)
-* `4` - incorrect taker fee (it is less than zero or its precision is too big)
-* `5` - incorrect maker fee (it is less than zero or its precision is too big)
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "activation_price": [
-            "The activation price field is required."
-        ],
-        "amount": [
-            "The amount field is required."
-        ],
-        "market": [
-            "The market field is required."
-        ],
-        "side": [
-            "The side field is required."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "side": [
-            "The selected side is invalid."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "amount": [
-            "The amount must be a number."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "market": [
-            "Unknown market."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "amount": [
-            "Not enough balance"
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "amount": [
-            "Given amount is less than min amount - 0.001",
-            "Min amount step = 0.000001"
-        ]
-    },
-    "message": "Validation failed"
-}
-
-```
-</details>
-
-___
-
-### Cancel order
-
-```
-[POST] /api/v4/order/cancel
-```
-Cancel existing order
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-market | String | **Yes** | Available market. Example: BTC_USDT
-orderId | Int | **Yes** | Order Id. Example: 4180284841
-
-**Request BODY raw:**
-```json5
-{
-    "market": "BTC_USDT",
-    "orderId": 4180284841,
-    "request": "{{request}}",
-    "nonce": "{{nonce}}"
-}
-```
-
-**Response:**
-
-Available statuses:
-* `Status 200`
-* `Status 422 if inner validation failed`
-* `Status 503 if service temporary unavailable`
-
-
-```json5
-{
-    "activation_price": "12000",       // activation price if activation price isset
-    "amount": "0.001",                 // amount
-    "dealFee": "0",                    // fee in money that you pay if order is finished
-    "dealMoney": "0",                  // if order finished - amount in money currency that finished
-    "dealStock": "0",                  // if order finished - amount in stock currency that finished
-    "left": "0.001",                   // if order not finished - rest of amount that must be finished
-    "makerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero    
-    "market": "BTC_USDT",              // deal market
-    "orderId": 4180284841,             // order id
-    "price": "9800",                   // price if price isset
-    "side": "buy",                     // order type
-    "takerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero
-    "timestamp": 1595792396.165973,    // current timestamp
-    "type": "stop market"              // order type
-}
-```
-<details>
-<summary><b>Errors:</b></summary>
-
-Error codes:
-* `1` - market disabled for trading
-* `2` - incorrect amount (it is less than or equals zero or its precision is too big)
-* `3` - incorrect price (it is less than or equals zero or its precision is too big)
-* `4` - incorrect taker fee (it is less than zero or its precision is too big)
-* `5` - incorrect maker fee (it is less than zero or its precision is too big)
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "market": [
-            "The market field is required."
-        ],
-        "orderId": [
-            "The order id field is required."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 2,
-    "errors": {
-        "order_id": [
-            "Unexecuted order was not found."
+        "ticker": [
+            "Currency is not depositable"
         ]
     },
     "message": "Inner validation failed"
@@ -760,34 +205,8 @@ Error codes:
 {
     "code": 0,
     "errors": {
-        "market": [
-            "Market is not available"
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "orderId": [
-            "The order id must be an integer."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "market": [
-            "The market must be a string.",
-            "The market format is invalid.",
-            "Market is not available"
+        "ticker": [
+            "Fiat are available on the front-end only"
         ]
     },
     "message": "Validation failed"
@@ -798,53 +217,45 @@ Error codes:
 
 ___
 
-### Query unexecuted orders
+
+### Get fiat deposit address
 
 ```
-[POST] /api/v4/orders
+[POST] /api/v4/main-account/fiat-deposit-url
 ```
-Returns unexecuted(active) orders
+Get deposit address of cryptocurrencies
 
 **Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-market | String | **Yes** | Available market. Example: BTC_USDT
-limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
-offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+ticker | String | **Yes** | Currencies ticker. Example: UAH ⚠ Currencies ticker should be: not cypto and has "can_deposit" status must be "true". Use this [url](https://whitebit.com/api/v4/public/assets) to know more about currency.
+provider | String | **Yes** | Fiat currency provider. Example: VISAMASTER ⚠ Currency provider should be taken from https://whitebit.com/api/v4/public/assets response.
+amount | String | **Yes** | Deposit amount.
+uniqueId | String | **Yes** | Unique transaction identifier on client side.
 
 **Request BODY raw:**
 ```json5
 {
-    "market": "BTC_USDT",
-    "offset": 0,
-    "limit": 100,
+    "ticker": "UAH",
+    "provider": "VISAMASTER",
+    "amount": "10",
+    "uniqueId": "someID",
     "request": "{{request}}",
     "nonce": "{{nonce}}"
 }
 ```
 
 **Response:**
-```json5
-[
-    {
-        "amount": "2.241379",             // active order amount
-        "dealFee": "0",                   // executed fee by deal
-        "dealMoney": "0",                 // executed amount in money
-        "dealStock": "0",                 // executed amount in stock
-        "left": "2.241379",               // unexecuted amount in stock
-        "makerFee": "0.001",              // maker fee ratio. If the number less than 0.0001 - its rounded to zero    
-        "market": "BTC_USDT",             // currency market
-        "orderId": 3686033640,            // unexecuted order ID
-        "price": "7900",                  // unexecuted order price
-        "side": "buy",                    // type of order
-        "takerFee": "0.001",              // taker fee ratio. If the number less than 0.0001 - its rounded to zero    
-        "timestamp": 1594605801.49815,    // current timestamp of unexecuted order
-        "type": "limit"                   // unexecuted order type
-    },
-    {...}
-]
+Available statuses:
+* `Status 200`
+* `Status 400 if request validation failed`
+* `Status 503 if service temporary unavailable`
 
+```json5
+{
+    "url": "https://someaddress.com"                  // address for deposit
+}
 ```
 <details>
 <summary><b>Errors:</b></summary>
@@ -853,8 +264,8 @@ offset | Int | **No** | If you want the query to return entries starting from a 
 {
     "code": 0,
     "errors": {
-        "market": [
-            "The market field is required."
+        "amount": [
+            "Amount is too little for deposit"
         ]
     },
     "message": "Validation failed"
@@ -865,8 +276,522 @@ offset | Int | **No** | If you want the query to return entries starting from a 
 {
     "code": 0,
     "errors": {
-        "market": [
-            "Market is not available"
+        "provider": [
+            "Cannot find currency for specified provider"
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "uniqueId": [
+            "The unique id has already been taken."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "amount": [
+            "The amount must be a number."
+        ],
+        "provider": [
+            "The selected provider is invalid."
+        ],
+        "ticker": [
+            "The selected ticker is invalid."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "amount": [
+            "Amount is too little for deposit"
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 10,
+    "message": "Failed to generate deposit url"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "amount": [
+            "The amount field is required."
+        ],
+        "provider": [
+            "The provider field is required."
+        ],
+        "ticker": [
+            "The ticker field is required."
+        ],
+        "uniqueId": [
+            "The unique id field is required."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+</details>
+
+___
+
+### Create withdraw request
+
+```
+[POST] /api/v4/main-account/withdraw
+```
+Create withdraw for specified ticker
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+ticker | String | **Yes** | Currencies ticker. Example: BTC ⚠ Currencies ticker should be: not cypto and has "can_deposit" status must be "true". Use this [url](https://whitebit.com/api/v4/public/assets) to know more about currency.
+amount | String | **Yes** | Deposit amount.
+address | String | **Yes** | Target address (wallet address for cryptocurrencies, some identifier/card number for fiat currencies)
+memo | String | **Yes, if currency is memoable** | Target address (wallet address for cryptocurrencies, some identifier/card number for fiat currencies)
+uniqueId | String | **Yes** | Unique transaction identifier on client side.
+provider | String | **Yes, if currency is fiat** | Fiat currency provider. Example: VISAMASTER ⚠ Currency provider should be taken from https://whitebit.com/api/v4/public/assets response.
+network | String | **No** | Cryptocurrency network. Available for multi network currencies. Example: USDT_OMNI ⚠ Currency network should be taken from https://whitebit.com/api/v4/public/assets response. Default for USDT is USDT_ETH
+
+**Request BODY raw:**
+```json5
+{
+    "ticker": "ETH",
+    "amount": "0.9",
+    "address": "0x0964A6B8F794A4B8d61b62652dB27ddC9844FB4c",
+    "uniqueId" : "24529041",
+    "request": "{{request}}",
+    "nonce": "{{nonce}}"
+}
+```
+
+**Response:**
+Available statuses:
+* `Status 201 if validation succeeded and withdraw creation process is started`
+* `Status 400 if request validation failed`
+* `Status 422 if inner validation failed`
+
+Response error codes:
+   * 1 - currency is not withdrawable
+   * 2 - specified address is invalid
+   * 3 - too little amount
+   * 4 - too little amount for payment system
+   * 5 - balance not enough
+   * 6 - amount is less than or equals fee
+   * 7 - amount should be integer (can happen for currencies with zero precision like Neo)
+   * 8 - target withdraw amount without fee equals zero
+   * 9 - address is unavailable (can happen for withdraws to own address)
+
+```json5
+[
+                                // empty array - has success status - goto deposit/withdraw history and check you request status by uniqueId
+]
+```
+<details>
+<summary><b>Errors:</b></summary>
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "address": [
+            "The address field is required."
+        ],
+        "amount": [
+            "The amount field is required."
+        ],
+        "ticker": [
+            "The ticker field is required."
+        ],
+        "uniqueId": [
+            "The unique id field is required."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "uniqueId": [
+            "The unique id has already been taken."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 2,
+    "errors": {
+        "address": [
+            "The address is invalid"
+        ]
+    },
+    "message": "Inner validation failed"
+}
+```
+
+```json5
+{
+    "code": 5,
+    "errors": {
+        "amount": [
+            "Not enough money, Ethereum balance = 1"
+        ]
+    },
+    "message": "Inner validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "ticker": [
+            "The selected ticker is invalid."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "provider": [
+            "Provider is required for fiat currency"
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "memo": [
+            "The memo field is required."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+</details>
+
+___
+
+### Transfer between main and trade balances
+
+```
+[POST] /api/v4/main-account/transfer
+```
+Transfer between main and trade balances
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+method | String | **Yes** | Method. Example: **deposit** if need to transfer from main to trade / **withdraw** if need transfer from trade balance to main
+ticker | String | **Yes** | Currency's ticker. Example: BTC
+amount | String | **Yes** | Amount to transfer. Max precision = 8, value should be greater than zero and your balance.
+
+**Request BODY raw:**
+```json5
+{
+    "ticker": "XLM",
+    "amount": "0.9",
+    "method": "deposit",
+    "request": "{{request}}",
+    "nonce": "{{nonce}}"
+}
+```
+
+**Response:**
+Available statuses:
+* `Status 201 if all validations succeeded and creating transaction is started`
+* `Status 400 if request validation failed`
+* `Status 422 if inner validation failed`
+
+Response error codes:
+   * 1 - transfers from trade to main are disabled
+   * 2 - transfers from main to trade are disabled
+   * 3 - balance is not enough
+
+```json5
+[
+                                // empty array - has success status - goto deposit/withdraw history and check you request status by uniqueId
+]
+```
+<details>
+<summary><b>Errors:</b></summary>
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "amount": [
+            "The amount field is required."
+        ],
+        "method": [
+            "The method field is required."
+        ],
+        "ticker": [
+            "The ticker field is required."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "ticker": [
+            "The selected ticker is invalid."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 3,
+    "errors": {
+        "amount": [
+            "You don't have such amount for transfer (available 34.68, in amount: 1000000)"
+        ]
+    },
+    "message": "Inner validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "method": [
+            "The selected method is invalid."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "amount": [
+            "The amount must be at least 0.00000001."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "amount": [
+            "The amount must be a number.",
+            "Invalid number"
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+</details>
+
+___
+
+### Get deposit/withdraw history
+
+```
+[POST] /api/v4/main-account/history
+```
+Get history of deposits and withdraws
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+transactionMethod | Number | **Yes** | Method. Example: **1** if need to display deposits / **2** if need to display withdraws
+ticker | String | **No** | Currency's ticker. Example: BTC
+address | String | **No** | Can be used for filtering transactions by specific address.
+limit | Int | **Yes** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
+offset | Int | **Yes** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+
+**Request BODY raw:**
+```json5
+{
+    "transactionMethod": "1",
+    "ticker": "BTC",
+    "offset": 0,
+    "limit": 100,
+    "request": "{{request}}",
+    "nonce": "{{nonce}}"
+}
+```
+
+**Response:**
+Available statuses:
+* `Status 201 if all validations succeeded and creating transaction is started`
+* `Status 400 if request validation failed`
+* `Status 422 if inner validation failed`
+
+Response error codes:
+* 1 - transfers from trade to main are disabled
+* 2 - transfers from main to trade are disabled
+* 3 - balance is not enough
+   
+Deposit status codes:
+* `Pending` - 15
+* `Unconfirmed by user` - 5
+* `Canceled` - 9 an 4
+* `Successful` - 3 and 7
+
+Withdraw status codes:
+* `Pending` - 1, 2, 6, 10, 11, 12, 13, 14
+* `Unconfirmed by user` - 5
+* `Canceled` - 4
+* `Successful` - 3 and 7
+
+```json5
+{
+    "limit": 100,
+    "offset": 0,
+    "records": [
+        {
+            "address": "3ApEASLcrQtZpg1TsssFgYF5V5YQJAKvuE",                                              // deposit address
+            "amount": "0.000600000000000000",                                                             // amount of deposit
+            "createdAt": 1593437922,                                                                      // timestamp of deposit
+            "currency": "Bitcoin",                                                                        // deposit currency
+            "description": "",                                                                            // deposit description
+            "fee": "0.000000000000000000",                                                                // deposit fee
+            "memo": "",                                                                                   // deposit memo
+            "method": 1,                                                                                  // called method 1 - deposit, 2 - withdraw
+            "network": null,                                                                              // if currency is multinetwork
+            "status": 15,                                                                                 // transactions status
+            "ticker": "BTC",                                                                              // deposit currency ticker
+            "transactionHash": "a275a514013e4e0f927fd0d1bed215e7f6f2c4c6ce762836fe135ec22529d886",        // deposit transaction hash
+            "uniqueId": null,                                                                             // unique Id of deposit
+            "confirmations": {                                                                            // if transaction status == 15 you can see this object
+                "actual": 1,                                                                              // current block confirmations
+                "required": 2                                                                             // required block confirmation for successful deposit
+            }                                                                                             
+        },
+        {...},
+        {...},
+        {...}
+    ],
+    "total": 4                                                                                             // number of transactions that returns
+}
+
+```
+<details>
+<summary><b>Errors:</b></summary>
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit field is required."
+        ],
+        "offset": [
+            "The offset field is required."
+        ],
+        "transactionMethod": [
+            "The transaction method field is required."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "ticker": [
+            "The selected ticker is invalid."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "transactionMethod": [
+            "The selected transaction method is invalid."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit may not be greater than 100."
+        ],
+        "offset": [
+            "The offset may not be greater than 10000."
+        ]
+    },
+    "message": "Validation failed"
+}
+```
+
+```json5
+{
+    "code": 0,
+    "errors": {
+        "limit": [
+            "The limit must be at least 1."
+        ],
+        "offset": [
+            "The offset must be at least 0."
         ]
     },
     "message": "Validation failed"
@@ -882,321 +807,6 @@ offset | Int | **No** | If you want the query to return entries starting from a 
         ],
         "offset": [
             "The offset must be an integer."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "limit": [
-            "The limit may not be greater than 100."
-        ],
-        "offset": [
-            "The offset may not be greater than 10000."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "limit": [
-            "The limit must be at least 1."
-        ],
-        "offset": [
-            "The offset must be at least 0."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-</details>
-
-___
-
-### Query executed order history
-
-```
-[POST] /api/v4/trade-account/executed-history
-```
-Returns orders history sorted by single market if it needed
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-market | String | **No** | Requested available market. Example: BTC_USDT
-limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
-offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
-
-**Request BODY raw:**
-```json5
-{
-    "offset": 0,
-    "limit": 100,
-    "request": "{{request}}",
-    "nonce": "{{nonce}}"
-}
-```
-
-**Response:**
-```json5
-{
-    "BTC_USDT": [
-        {
-            "amount": "0.000076",         // amount in stock
-            "deal": "0.70407996",         // amount in money
-            "fee": "0.00070407996",       // fee that you pay 
-            "id": 160305483,              // orderID
-            "price": "9264.21",           // price
-            "role": 2,                    // Role - 1 - maker, 2 - taker
-            "side": "sell",               // Order side "sell" / "buy"
-            "time": 1594667731.724403     // Timestamp of executed order
-        },
-        {...}
-    ],
-    "DTBC_DUSDT": [...]
-}
-
-
-```
-<details>
-<summary><b>Errors:</b></summary>
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "limit": [
-            "The limit may not be greater than 100."
-        ],
-        "offset": [
-            "The offset may not be greater than 10000."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "limit": [
-            "The limit must be at least 1."
-        ],
-        "offset": [
-            "The offset must be at least 0."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-</details>
-
-___
-
-### Query executed order deals
-
-```
-[POST] /api/v4/trade-account/order
-```
-Returns more detail order deals history 
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-orderId | Int | **Yes** | Order ID. Example: 1234
-limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
-offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
-
-**Request BODY raw:**
-```json5
-{
-    "orderId": 3135554375,
-    "offset": 0,
-    "limit": 100,
-    "request": "{{request}}",
-    "nonce": "{{nonce}}"
-}
-```
-
-**Response:**
-
-Empty response if order not yours
-```json5
-{
-    "result": {
-        "limit": 50,
-        "offset": 0,
-        "records": [
-            {
-                "amount": "598",                // amount in stock
-                "deal": "0.00419198",           // amount in money
-                "dealOrderId": 3134995325,      // completed order ID
-                "fee": "0.00000419198",         // fee that you pay 
-                "id": 149156519,                // id of trade
-                "price": "0.00000701",          // price
-                "role": 2,                      // Role - 1 - maker, 2 - taker
-                "time": 1593342324.613711       // Timestamp of executed order
-            }
-        ]
-    },
-}
-
-
-```
-<details>
-<summary><b>Errors:</b></summary>
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "orderId": [
-            "The order id field is required."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "orderId": [
-            "The order id must be an integer."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "limit": [
-            "The limit may not be greater than 100."
-        ],
-        "offset": [
-            "The offset may not be greater than 100000."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "limit": [
-            "The limit must be at least 1."
-        ],
-        "offset": [
-            "The offset must be at least 0."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-</details>
-
-___
-
-### Query executed orders by market
-
-```
-[POST] /api/v4/trade-account/order/history
-```
-Returns executed order history by market
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-market | String | **No** | Requested available market. Example: BTC_USDT
-limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
-offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
-
-**Request BODY raw:**
-```json5
-{
-    "market": "BTC_USDT",
-    "offset": 0,
-    "limit": 100,
-    "request": "{{request}}",
-    "nonce": "{{nonce}}"
-}
-```
-
-**Response:**
-
-Empty response if order not yours
-```json5
-{
-    "BTC_USDT": [
-        {
-            "amount": "0.020159",             // amount of trade
-            "ctime": 1597486960.311311,       // timestamp of order creation
-            "dealFee": "0",                   // fee in money that you pay if order is finished
-            "dealMoney": "239.83908183",      // amount in money currency that finished
-            "dealStock": "0.020159",          // amount in stock currency that finished
-            "ftime": 1597486960.311332,       // executed order timestamp
-            "id": 4986126152,                 // order id
-            "makerFee": "0",                  // maker fee ratio. If the number less than 0.0001 - its rounded to zero  
-            "price": "0",                     // price
-            "side": "sell",                   // order side
-            "takerFee": "0",                  // maker fee ratio. If the number less than 0.0001 - its rounded to zero
-            "type": "margin market"           // order type
-        },
-        {...}
-    ]
-}
-
-
-
-```
-<details>
-<summary><b>Errors:</b></summary>
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "limit": [
-            "The limit may not be greater than 100."
-        ],
-        "offset": [
-            "The offset may not be greater than 100000."
-        ]
-    },
-    "message": "Validation failed"
-}
-```
-
-```json5
-{
-    "code": 0,
-    "errors": {
-        "limit": [
-            "The limit must be at least 1."
-        ],
-        "offset": [
-            "The offset must be at least 0."
         ]
     },
     "message": "Validation failed"
