@@ -55,7 +55,7 @@ ___
 ```
 [GET] /api/v2/public/markets
 ```
-This endpoint retrieves all information about markets for trading.
+This endpoint retrieves all information about available markets.
 
 **Response is cached for:**
 _1 second_
@@ -70,12 +70,12 @@ NONE
   "message": "",
   "result": [
     {
-      "name": "SON_USD",         // Name of market pair
+      "name": "SON_USD",         // Market pair name
       "moneyPrec": "2",          // Precision of money currency
       "stock": "SON",            // Ticker of stock currency
       "money": "USD",            // Ticker of money currency
-      "stockPrec": "3",          // Precision of stock currency
-      "feePrec": "4",            // Precision of fee
+      "stockPrec": "3",          // Stock currency precision
+      "feePrec": "4",            // Fee precision
       "minAmount": "0.001",      // Minimal amount of stock to trade
       "tradesEnabled": true,     // Is trading enabled
       "minTotal": "0.001",       // Minimal amount of money to trade
@@ -95,7 +95,7 @@ ___
 ```
 [GET] /api/v2/public/ticker
 ```
-This endpoint retrieves information about recent trading activity for the market.
+This endpoint retrieves information on recent trading activity on all markets.
 
 **Response is cached for:**
 _1 second_
@@ -132,7 +132,7 @@ ___
 ```
 [GET] /api/v2/public/trades/{market}
 ```
-This will return the trades that have executed recently for requested market.
+This endpoint retrieves the trades that have been executed recently on the requested market
 
 **Response is cached for:**
 _1 second_
@@ -166,7 +166,7 @@ ___
 ```
 [GET] /api/v2/public/fee
 ```
-This endpoint retrieves trading fee.
+This endpoint retrieves the trading fee.
 
 **Response is cached for:**
 _1 second_
@@ -180,8 +180,8 @@ NONE
   "success": true,
   "message": "",
   "result": {
-    "makerFee": "0.1",  // Default maker fee percent number
-    "takerFee": "0.1"   // Default taker fee percent number
+    "makerFee": "0.1",  // Default maker fee (percent of trading amount)
+    "takerFee": "0.1"   // Default taker fee (percent of trading amount)
   }
 }
 ```
@@ -192,7 +192,7 @@ ___
 ```
 [GET] /api/v2/public/assets
 ```
-This will return the trades that have executed recently for requested market.
+This endpoint retrieves the assets status.
 
 **Response is cached for:**
 _1 second_
@@ -228,7 +228,7 @@ ___
 ```
 [GET] /v2/public/depth/{market}
 ```
-This will return the current order book as two arrays (bids / asks).
+This endpoint retrievs the current order book as two arrays (bids / asks).
 
 **Response is cached for:**
 _1 second_
