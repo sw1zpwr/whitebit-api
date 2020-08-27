@@ -55,7 +55,7 @@ ___
 ```
 [POST] /api/v1/account/balance
 ```
-Get trade balance by currency ticker.
+This endpoint retrieves the trade balance by currency ticker.
 
 **Parameters:**
 
@@ -120,7 +120,7 @@ ___
 ```
 [POST] /api/v1/account/balances
 ```
-Get all balances for trading.
+This endpoint retrieves all available balances for trading.
 
 **Parameters:**
 NONE
@@ -193,7 +193,7 @@ ___
 ```
 [POST] /api/v1/order/new
 ```
-Creates limit trading order
+This endpoint creates limit trading order.
 
 **Parameters:**
 
@@ -340,7 +340,7 @@ ___
 ```
 [POST] /api/v1/order/cancel
 ```
-Cancel existing order
+This endpoint cancels the existing order.
 
 **Parameters:**
 
@@ -449,12 +449,12 @@ orderId | Int | **Yes** | Order Id. Example: 4180284841
 
 ___
 
-### Query unexecuted orders
+### Query unexecuted(active) orders
 
 ```
 [POST] /api/v1/orders
 ```
-Returns unexecuted(active) orders
+This endpoint retrieves unexecuted orders only.
 
 **Parameters:**
 
@@ -462,7 +462,7 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 market | String | **Yes** | Available market. Example: BTC_USDT
 limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
-offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+offset | Int | **No** | If you want the request to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 **Request BODY raw:**
 ```json5
@@ -579,7 +579,7 @@ ___
 ```
 [POST] /api/v1/account/order_history
 ```
-Returns orders history sorted by all markets
+This endpoint retrieves orders history sorted by all markets
 
 **Parameters:**
 
@@ -587,7 +587,7 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 market | String | **No** | Requested available market. Example: BTC_USDT
 limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
-offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+offset | Int | **No** | If you want the request to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 **Request BODY raw:**
 ```json5
@@ -616,9 +616,9 @@ offset | Int | **No** | If you want the query to return entries starting from a 
                 "makerFee": "0.001",              // maker fee ratio. If the number less than 0.0001 - its rounded to zero
                 "market": "BTC_USDT",             // mair
                 "marketName": "BTC_USDT",         // market name
-                "price": "0",                     // executed order price, if executed order type is market it 0
+                "price": "0",                     // executed order price, if executed order type is market it is equal to 0
                 "side": "sell",                   // executed order side
-                "takerFee": "0.001",              // taker fee ratio. If the number less than 0.0001 - its rounded to zero 
+                "takerFee": "0.001",              // taker fee ratio. If the number less than 0.0001 - it is rounded to zero 
                 "type": "market"                  // executed order type
             }
         ],
@@ -703,15 +703,15 @@ ___
 ```
 [POST] /api/v1/account/executed_history
 ```
-Returns orders history sorted by single market
+This endpoint retrieves orders history sorted by single market
 
 **Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 market | String | **Yes** | Requested available market. Example: BTC_USDT
-limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
-offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+limit | Int | **No** | LIMIT is a special clause used to limit records that a particular query can return. Default: 50, Min: 1, Max: 100
+offset | Int | **No** | If you want the request to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 **Request BODY raw:**
 ```json5
@@ -814,7 +814,7 @@ ___
 ```
 [POST] /api/v1/account/executed_history/all
 ```
-Returns orders history sorted by single market
+This endpoint retrieves orders history sorted by single market.
 
 **Parameters:**
 
@@ -822,7 +822,7 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 market | String | **Yes** | Requested available market. Example: BTC_USDT
 limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
-offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+offset | Int | **No** | If you want the request to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 **Request BODY raw:**
 ```json5
@@ -844,7 +844,7 @@ offset | Int | **No** | If you want the query to return entries starting from a 
             {
                 "amount": "0.000076",         // amount in stock
                 "deal": "0.70407996",         // amount in money
-                "fee": "0.00070407996",       // fee that you pay 
+                "fee": "0.00070407996",       // paid fee
                 "id": 160305483,              // orderID
                 "price": "9264.21",           // price
                 "role": 2,                    // Role - 1 - maker, 2 - taker
@@ -929,7 +929,7 @@ ___
 ```
 [POST] /api/v1/account/order
 ```
-Returns more detail order deals history 
+This endpoint retrieves more details on order deals history.
 
 **Parameters:**
 
@@ -937,7 +937,7 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 orderId | Int | **Yes** | Order ID. Example: 1234
 limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
-offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+offset | Int | **No** | If you want the request to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 **Request BODY raw:**
 ```json5
@@ -952,7 +952,7 @@ offset | Int | **No** | If you want the query to return entries starting from a 
 
 **Response:**
 
-Empty response if order not yours
+Empty response if order is not yours
 ```json5
 {
     "message": "",
@@ -964,7 +964,7 @@ Empty response if order not yours
                 "amount": "598",                // amount in stock
                 "deal": "0.00419198",           // amount in money
                 "dealOrderId": 3134995325,      // completed order ID
-                "fee": "0.00000419198",         // fee that you pay 
+                "fee": "0.00000419198",         // paid fee
                 "id": 149156519,                // id of trade
                 "price": "0.00000701",          // price
                 "role": 2,                      // Role - 1 - maker, 2 - taker
