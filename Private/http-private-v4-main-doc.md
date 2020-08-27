@@ -52,7 +52,7 @@ ___
 
 `Maker` - person who puts an order and waiting till this order will be finished
 
-`Taker` - person who finishes existing order
+`Taker` - person who finishes the existing order
 
 `Precision` - is the number of digits to the right of the decimal point
 
@@ -60,17 +60,17 @@ ___
 
 `Ask` - sell order
 
-`Limit order` - to place this order, you need to fill the 'Price' and 'Amount' fields. If this order finds a corresponding order on the opposite side, it will be executed. Otherwise it will be placed into the orderbook.
+`Limit order` - to place this order, you need to fill in the 'Price' and 'Amount' fields. If this order finds a corresponding order on the opposite side, it will be executed. Otherwise it will be placed into the orderbook.
 
 `Fiat` - is a currency (a medium of exchange) established as money, often by government regulation, but that does not have intrinsic value (value independent of the nominal value, such as a precious metal might have).
 
 `Provider` - fiat currencies has different providers that helps people making deposits and withdraws by bank transfers.
 
-`Multinetwork` - cryptocurrency like USDT obtained in different networks, like: OMNI, Tron, Ethereum etc. If we need to make deposits and withdraws on for example on USDT we need to choose the network.
+`Multinetwork` - cryptocurrency like USDT obtained in different networks, like: OMNI, Tron, Ethereum etc. Network should be selected in order to make a deposit or withdraw.
 
-`Main balance` - balance on exchange that accept deposits and withdraws.
+`Main balance` - balance on exchange that accepts deposits and/or withdraws.
 
-`Memo` - some currencies like XLM can create only one address for exchange. So for detecting witch transaction is your exchanges use additional data - memo.
+`Memo` - some currencies like XLM can create only one address for exchange. So for detecting which transaction is yours exchanges uses additional data - memo.
 
 
 ___
@@ -79,7 +79,7 @@ ___
 ```
 [POST] /api/v4/main-account/balance
 ```
-Get main balance by currency ticker or all balances.
+This endpoint retrieves the main balance by currency ticker or all balances.
 
 **Parameters:**
 
@@ -146,7 +146,7 @@ ___
 ```
 [POST] /api/v4/main-account/address
 ```
-Get deposit address of cryptocurrencies
+This endpoint retrieves a deposit address of the cryptocurrency.
 
 **Parameters:**
 
@@ -173,7 +173,7 @@ Available statuses:
 {
     "account": {
         "address": "GDTSOI56XNVAKJNJBLJGRNZIVOCIZJRBIDKTWSCYEYNFAZEMBLN75RMN",        // deposit address
-        "memo": "48565488244493"                                                      // memo if currency is required memo
+        "memo": "48565488244493"                                                      // memo if currency requires memo
     },
     "required": {
         "fixedFee": "0",                                                              // fixed deposit fee
@@ -182,8 +182,8 @@ Available statuses:
             "minFee": "0",                                                            // minimum fixed fee that you will pay
             "percent": "0"                                                            // percent of deposit that you will pay
         },
-        "maxAmount": "0",                                                             // max amount of deposit that accepted by exchange - if you will deposit more then that number it won't be accepted by exchange 
-        "minAmount": "1"                                                              // min amount of deposit that accepted by exchange - if you will deposit less then that number it won't be accepted by exchange 
+        "maxAmount": "0",                                                             // max amount of deposit that can be accepted by exchange - if you deposit more than that number, it won't be accepted by exchange 
+        "minAmount": "1"                                                              // min amount of deposit that can be accepted by exchange - if you will deposit less than that number, it won't be accepted by exchange 
     }
 }
 ```
@@ -236,7 +236,7 @@ ___
 ```
 [POST] /api/v4/main-account/fiat-deposit-url
 ```
-Get deposit address of cryptocurrencies
+This endpoint retrieves a deposit address of the cryptocurrency.
 
 **Parameters:**
 
@@ -245,7 +245,7 @@ Name | Type | Mandatory | Description
 ticker | String | **Yes** | Currencies ticker. Example: UAH ⚠ Currencies ticker should be: not cypto and has "can_deposit" status must be "true". Use this [url](https://whitebit.com/api/v4/public/assets) to know more about currency.
 provider | String | **Yes** | Fiat currency provider. Example: VISAMASTER ⚠ Currency provider should be taken from https://whitebit.com/api/v4/public/assets response.
 amount | Numeric String | **Yes** | Deposit amount.
-uniqueId | String | **Yes** | Unique transaction identifier on client side.
+uniqueId | String | **Yes** | Unique transaction identifier on client's side.
 
 **Request BODY raw:**
 ```json5
@@ -376,7 +376,7 @@ ___
 ```
 [POST] /api/v4/main-account/withdraw
 ```
-Create withdraw for specified ticker
+This endpoint creates withdraw for the specified ticker.
 
 **Parameters:**
 
@@ -384,9 +384,9 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 ticker | String | **Yes** | Currencies ticker. Example: BTC ⚠ Currencies ticker should be: not cypto and has "can_deposit" status must be "true". Use this [url](https://whitebit.com/api/v4/public/assets) to know more about currency.
 amount | Numeric string | **Yes** | Deposit amount.
-address | String | **Yes** | Target address (wallet address for cryptocurrencies, some identifier/card number for fiat currencies)
-memo | String | **Yes, if currency is memoable** | Target address (wallet address for cryptocurrencies, some identifier/card number for fiat currencies)
-uniqueId | String | **Yes** | Unique transaction identifier on client side.
+address | String | **Yes** | Target address (wallet address for cryptocurrencies, identifier/card number for fiat currencies)
+memo | String | **Yes, if currency is memoable** | Target address (wallet address for cryptocurrencies, identifier/card number for fiat currencies)
+uniqueId | String | **Yes** | Unique transaction identifier on client's side.
 provider | String | **Yes, if currency is fiat** | Fiat currency provider. Example: VISAMASTER ⚠ Currency provider should be taken from https://whitebit.com/api/v4/public/assets response.
 network | String | **No** | Cryptocurrency network. Available for multi network currencies. Example: USDT_OMNI ⚠ Currency network should be taken from https://whitebit.com/api/v4/public/assets response. Default for USDT is USDT_ETH
 
@@ -411,17 +411,17 @@ Available statuses:
 Response error codes:
    * 1 - currency is not withdrawable
    * 2 - specified address is invalid
-   * 3 - too little amount
-   * 4 - too little amount for payment system
-   * 5 - balance not enough
+   * 3 - amount is too small
+   * 4 - amount is too small for the payment system
+   * 5 - not enough balance 
    * 6 - amount is less than or equals fee
    * 7 - amount should be integer (can happen for currencies with zero precision like Neo)
    * 8 - target withdraw amount without fee equals zero
-   * 9 - address is unavailable (can happen for withdraws to own address)
+   * 9 - address is unavailable (occurs for withdraws to own address)
 
 ```json5
 [
-                                // empty array - has success status - goto deposit/withdraw history and check you request status by uniqueId
+                                // empty array - has success status - go to deposit/withdraw history and check you request status by uniqueId
 ]
 ```
 <details>
@@ -529,15 +529,15 @@ ___
 ```
 [POST] /api/v4/main-account/transfer
 ```
-Transfer between main and trade balances
+This endpoint transfers the specified amount between main and trade balances
 
 **Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-method | String | **Yes** | Method. Example: **deposit** if need to transfer from main to trade / **withdraw** if need transfer from trade balance to main
+method | String | **Yes** | Method. Example: **deposit** if you need to transfer from main to trade / **withdraw** if you need to transfer from trade balance to main
 ticker | String | **Yes** | Currency's ticker. Example: BTC
-amount | Numeric string | **Yes** | Amount to transfer. Max precision = 8, value should be greater than zero and your balance.
+amount | Numeric string | **Yes** | Amount to transfer. Max precision = 8, value should be greater than zero and less or equal your available balance.
 
 **Request BODY raw:**
 ```json5
@@ -559,7 +559,7 @@ Available statuses:
 Response error codes:
    * 1 - transfers from trade to main are disabled
    * 2 - transfers from main to trade are disabled
-   * 3 - balance is not enough
+   * 3 - not enough balance
 
 ```json5
 [
@@ -657,7 +657,7 @@ ___
 ```
 [POST] /api/v4/main-account/history
 ```
-Get history of deposits and withdraws
+This endpoint retrieves the history of deposits and withdraws
 
 **Parameters:**
 
@@ -667,7 +667,7 @@ transactionMethod | Number | **Yes** | Method. Example: **1** if need to display
 ticker | String | **No** | Currency's ticker. Example: BTC
 address | String | **No** | Can be used for filtering transactions by specific address.
 limit | Int | **Yes** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
-offset | Int | **Yes** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+offset | Int | **Yes** | If you want the request to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 **Request BODY raw:**
 ```json5
@@ -690,7 +690,7 @@ Available statuses:
 Response error codes:
 * 1 - transfers from trade to main are disabled
 * 2 - transfers from main to trade are disabled
-* 3 - balance is not enough
+* 3 - not enough balance
    
 Deposit status codes:
 * `Pending` - 15
@@ -732,7 +732,7 @@ Withdraw status codes:
         {...},
         {...}
     ],
-    "total": 4                                                                                             // number of transactions that returns
+    "total": 4                                                                                             // total number of  transactions that returns in response
 }
 
 ```
@@ -835,7 +835,7 @@ ___
 ```
 [POST] /api/v4/main-account/create-new-address
 ```
-This endpoint should be used to create new address even when last created address is not used. This endpoint is not available by default, you need to contact support@whitebit.com for getting such permissions.
+This endpoint creates a new address even when the last created address is not used. This endpoint is not available by default, you need to contact support@whitebit.com for getting such permissions.
 
 **Parameters:**
 
@@ -864,7 +864,7 @@ Available statuses:
 {
     "account": {
         "address": "GDTSOI56XNVAKJNJBLJGRNZIVOCIZJRBIDKTWSCYEYNFAZEMBLN75RMN",        // deposit address
-        "memo": "48565488244493"                                                      // memo if currency is required memo
+        "memo": "48565488244493"                                                      // memo if currency requires memo
     },
     "required": {
         "fixedFee": "0",                                                              // fixed deposit fee
@@ -873,8 +873,8 @@ Available statuses:
             "minFee": "0",                                                            // minimum fixed fee that you will pay
             "percent": "0"                                                            // percent of deposit that you will pay
         },
-        "maxAmount": "0",                                                             // max amount of deposit that accepted by exchange - if you will deposit more then that number it won't be accepted by exchange 
-        "minAmount": "1"                                                              // min amount of deposit that accepted by exchange - if you will deposit less then that number it won't be accepted by exchange 
+        "maxAmount": "0",                                                             // max amount of deposit that can be accepted by exchange - if you deposit more than that number, it won't be accepted by exchange 
+        "minAmount": "1"                                                              // min amount of deposit that accepted by exchange - if you deposit less than that number, it won't be accepted by exchange 
     }
 }
 
@@ -944,7 +944,7 @@ ___
 ```
 [POST] /api/v4/main-account/codes
 ```
-Create WhiteBIT code.
+This endpoint creates WhiteBIT code.
 
 **Parameters:**
 
@@ -953,7 +953,7 @@ Name | Type | Mandatory | Description
 ticker | String | **Yes** | Currency's ticker. Example: BTC
 amount | Numeric string | **Yes** | Amount to transfer. Max precision = 8, value should be greater than zero and your main balance.
 passphrase | String | **No** | Passphrase that will used for applying codes. Max: 25 symbols.
-description | String | **No** | Description for code. Visible only for creator Max: 75 symbols.
+description | String | **No** | Additional text description for code. Visible only for creator Max: 75 symbols.
 
 **Request BODY raw:**
 ```json5
@@ -977,9 +977,9 @@ Response error codes:
 * 0 - Fiat are available on the front-end only
 * 1 - currency is not withdrawable
 * 2 - specified address is invalid
-* 3 - too little amount
-* 4 - too little amount for payment system
-* 5 - balance not enough
+* 3 - amount is too small
+* 4 - amount is too small for the payment system
+* 5 - not enough balance
 * 6 - amount is less than or equals fee
 
 ```json5
@@ -1059,14 +1059,14 @@ ___
 ```
 [POST] /api/v4/main-account/codes/apply
 ```
-Apply WhiteBIT code.
+This endpoint applies WhiteBIT code.
 
 **Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-code | String | **Yes** | Code to be applied.
-passphrase | String | **No** | Shuld be provided if code was created with passphrase Max: 25 symbols.
+code | String | **Yes** | Code that will be applied.
+passphrase | String | **No** | Should be provided if the code was created with passphrase Max: 25 symbols.
 
 **Request BODY raw:**
 ```json5
@@ -1132,7 +1132,7 @@ ___
 ```
 [POST] /api/v4/main-account/codes/my
 ```
-Retuns list of WhiteBIT codes created by me
+This endpoint retrieves the list of WhiteBIT codes created by my account.
 
 
 **Parameters:**
@@ -1140,7 +1140,7 @@ Retuns list of WhiteBIT codes created by me
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 30, Min: 1, Max: 100
-offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+offset | Int | **No** | If you want the request to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 
 **Request BODY raw:**
@@ -1234,7 +1234,7 @@ ___
 ```
 [POST] /api/v4/main-account/codes/history
 ```
-Retuns whole codes history
+This endpoint retrieves the whole codes history on your account.
 
 
 **Parameters:**
@@ -1242,7 +1242,7 @@ Retuns whole codes history
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 30, Min: 1, Max: 100
-offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+offset | Int | **No** | If you want the request to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 
 **Request BODY raw:**
@@ -1264,14 +1264,14 @@ Available statuses:
 {
     "data": [
         {
-            "amount": "+0.002",                                           // code amount change - is created + is applied
+            "amount": "+0.002",                                           // code amount change; - is created; + is applied
             "code": "WBe11f4fce-2a53-4edc-b195-66b693bd77e3ETH",          // code
             "date": 1598296734,                                           // code activation timestamp
             "status": "Activated",                                        // current code status
             "ticker": "ETH"                                               // code ticker
         },
         {
-            "amount": "-0.002",                                           // code amount change - is created + is applied
+            "amount": "-0.002",                                           // code amount change; - is created; + is applied
             "code": "WBe11f4fce-2a53-4edc-b195-66b693bd77e3ETH",          // code
             "date": 1598296332,                                           // code creation timestamp
             "status": "Activated",                                        // current code status
