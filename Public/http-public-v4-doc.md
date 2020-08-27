@@ -55,7 +55,7 @@ ___
 ```
 [GET] /api/v4/public/ticker
 ```
-The ticker endpoint is to provide a 24-hour pricing and volume summary for each market pair available on the exchange.
+This endpoint retrieves a 24-hour pricing and volume summary for each market pair available on the exchange.
 
 **Response is cached for:**
 _1 second_
@@ -67,12 +67,12 @@ NONE
 ```json5
 {
   "BTC_USDT": {
-    "base_id": 1,                           // CoinmarketCap Id of base currency 0 - if unknown
-    "quote_id": 825,                        // CoinmarketCap Id of quote currency 0 - if unknown
+    "base_id": 1,                           // CoinmarketCap Id of base currency; 0 - if unknown
+    "quote_id": 825,                        // CoinmarketCap Id of quote currency; 0 - if unknown
     "last_price": "9164.09",                // Last price
     "quote_volume": "43341942.90416876",    // Volume in quote currency
     "base_volume": "4723.286463",           // Volume in base currency
-    "isFrozen": false                       // Trades are closed
+    "isFrozen": false                       // Identifies if trades are closed
   },
   {...}
 }
@@ -84,7 +84,7 @@ ___
 ```
 [GET] /api/v4/public/assets
 ```
-This will return the trades that have executed recently for requested market.
+This endpoint retrieves the assets status.
 
 **Response is cached for:**
 _1 second_
@@ -124,7 +124,7 @@ NONE
     "max_withdraw": "0.000000000000000000",
     "maker_fee": "0.1",
     "taker_fee": "0.1",
-    "networks": {                             // This object will exist if a currency is available on several networks
+    "networks": {                             // This object will be available in response if the currency is available on several networks
       "deposits": [                           // Networks available for depositing
         "ERC20",
         "TRC20",
@@ -148,7 +148,7 @@ ___
 ```
 [GET] /api/v4/public/orderbook/{market}?depth=100&level=2
 ```
-This will return the current order book as two arrays (bids / asks).
+This endpoint retrieves the current order book as two arrays (bids / asks) with additional parameters.
 
 **Response is cached for:**
 _1 second_
@@ -157,7 +157,7 @@ _1 second_
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-depth | int | **No** | Orders depth quantity:[0,5,10,20,50,100,500] Not defined or 0 = full order book
+depth | int | **No** | Orders depth quantity:[0,5,10,20,50,100,500]. Not defined or 0 will return full order book
 limit | int | **No** | Level 1 – Only the best bid and ask. Level 2 – Arranged by best bids and asks. Level 3 – Complete order book, no aggregation.
 
 
@@ -188,7 +188,7 @@ ___
 ```
 [GET] /api/v4/public/trades/{market}?type=sell
 ```
-This will return the trades that have executed recently for requested market.
+This endpoint retrieves the trades that have been executed recently on the requested requested market.
 
 **Response is cached for:**
 _1 second_
@@ -197,7 +197,7 @@ _1 second_
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-type | String | **No** | Query buy side or sell side only. Can be sell or buy only
+type | String | **No** | Can be buy or sell
 
 
 **Response:**
@@ -208,8 +208,8 @@ type | String | **No** | Query buy side or sell side only. Can be sell or buy on
     "price": "9186.13",               // Transaction price in base pair volume.
     "base_volume": "9186.13",         // Transaction amount in base pair volume.
     "quote_volume": "0.0021",         // Transaction amount in quote pair volume.
-    "trade_timestamp": 1594391747,    // Unix timestamp in milliseconds for when the transaction occurred.
-    "type": "sell"                    //  Used to determine whether or not the transaction originated as a buy or sell. Buy – Identifies an ask was removed from the order book. Sell – Identifies a bid was removed from the order book.
+    "trade_timestamp": 1594391747,    // Unix timestamp in milliseconds, identifies when the transaction occurred.
+    "type": "sell"                    //  Used to determine whether or not the transaction originated as a buy or sell. Buy – Identifies an ask that was removed from the order book. Sell – Identifies a bid that was removed from the order book.
   },
   {
     "tradeID": 158056416,
