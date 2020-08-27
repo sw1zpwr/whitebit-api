@@ -49,7 +49,7 @@ ___
 
 `Ask` - sell order
 
-`Limit order` - to place this order, you need to fill the 'Price' and 'Amount' fields. If this order finds a corresponding order on the opposite side, it will be executed. Otherwise it will be placed into the orderbook.
+`Limit order` - to place this order, you need to fill in the 'Price' and 'Amount' fields. If this order finds a corresponding order on the opposite side, it will be executed. Otherwise it will be placed into the orderbook.
 
 ___
 ### Trading balance
@@ -57,7 +57,7 @@ ___
 ```
 [POST] /api/v4/trade-account/balance
 ```
-Get trade balance by currency ticker or all balances.
+This endpoint retrieves the trade balance by currency ticker or all balances.
 
 **Parameters:**
 
@@ -85,7 +85,7 @@ Available statuses:
     "...": {...},
     "BTC": {
         "available": "0.123",      // Available balance of currency for trading
-        "freeze": "1"              // Balance of currency on orders
+        "freeze": "1"              // Balance of currency that is currently in active orders
     },
     "...": {...},
     "XMR": {
@@ -113,7 +113,7 @@ ___
 ```
 [POST] /api/v4/order/new
 ```
-Creates limit trading order
+This endpoint creates limit trading order.
 
 **Parameters:**
 
@@ -146,15 +146,15 @@ Available statuses:
 {
     "amount": "0.001",                 // amount
     "dealFee": "0",                    // fee in money that you pay if order is finished
-    "dealMoney": "0",                  // if order finished - amount in money currency that finished
-    "dealStock": "0",                  // if order finished - amount in stock currency that finished
-    "left": "0.001",                   // if order not finished - rest of amount that must be finished
-    "makerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero    
+    "dealMoney": "0",                  // if order finished - amount in money currency that is finished
+    "dealStock": "0",                  // if order finished - amount in stock currency that is finished
+    "left": "0.001",                   // if order not finished - rest of the amount that must be finished
+    "makerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - it will be rounded to zero    
     "market": "BTC_USDT",              // deal market
     "orderId": 4180284841,             // order id
     "price": "9800",                   // price
     "side": "buy",                     // order type
-    "takerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero
+    "takerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - it will be rounded to zero
     "timestamp": 1595792396.165973,    // current timestamp
     "type": "limit"                    // order type
 }
@@ -163,7 +163,7 @@ Available statuses:
 <summary><b>Errors:</b></summary>
 
 Error codes:
-* `1` - market disabled for trading
+* `1` - market is disabled for trading
 * `2` - incorrect amount (it is less than or equals zero or its precision is too big)
 * `3` - incorrect price (it is less than or equals zero or its precision is too big)
 * `4` - incorrect taker fee (it is less than zero or its precision is too big)
@@ -272,7 +272,7 @@ ___
 ```
 [POST] /api/v4/order/market
 ```
-Creates market trading order
+This endpoint creates market trading order.
 
 **Parameters:**
 
@@ -287,7 +287,7 @@ amount | String | **Yes** | ⚠️Amount of **`money`** currency to **buy** or a
 {
     "market": "BTC_USDT",
     "side": "buy",
-    "amount": "0.01",             // i want to buy 0.01 USDT
+    "amount": "0.01",             // I want to buy 0.01 USDT
     "request": "{{request}}",
     "nonce": "{{nonce}}"
 }
@@ -297,7 +297,7 @@ amount | String | **Yes** | ⚠️Amount of **`money`** currency to **buy** or a
 {
     "market": "BTC_USDT",
     "side": "sell",
-    "amount": "0.01",              // i want to sell 0.01 BTC
+    "amount": "0.01",              // I want to sell 0.01 BTC
     "request": "{{request}}",
     "nonce": "{{nonce}}"
 }
@@ -306,8 +306,8 @@ amount | String | **Yes** | ⚠️Amount of **`money`** currency to **buy** or a
 **Response:**
 Available statuses:
 * `Status 200`
-* `Status 422 if inner validation failed`
-* `Status 503 if service temporary unavailable`
+* `Status 422 if internal validation failed`
+* `Status 503 if service is temporary unavailable`
 
 ```json5
 {
@@ -329,7 +329,7 @@ Available statuses:
 <summary><b>Errors:</b></summary>
 
 Error codes:
-* `1` - market disabled for trading
+* `1` - market is disabled for trading
 * `2` - incorrect amount (it is less than or equals zero or its precision is too big)
 * `3` - incorrect price (it is less than or equals zero or its precision is too big)
 * `4` - incorrect taker fee (it is less than zero or its precision is too big)
@@ -423,7 +423,7 @@ ___
 ```
 [POST] /api/v4/order/stop_limit
 ```
-Creates stop-limit trading order
+This endpoint creates stop-limit trading order
 
 **Parameters:**
 
@@ -462,12 +462,12 @@ Available statuses:
     "dealMoney": "0",                  // if order finished - amount in money currency that finished
     "dealStock": "0",                  // if order finished - amount in stock currency that finished
     "left": "0.001",                   // if order not finished - rest of amount that must be finished
-    "makerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero    
+    "makerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - it will be rounded to zero    
     "market": "BTC_USDT",              // deal market
     "orderId": 4180284841,             // order id
     "price": "9800",                   // price
     "side": "buy",                     // order type
-    "takerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero
+    "takerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - it will be rounded to zero
     "timestamp": 1595792396.165973,    // current timestamp
     "type": "stop limit"               // order type
 }
@@ -476,7 +476,7 @@ Available statuses:
 <summary><b>Errors:</b></summary>
 
 Error codes:
-* `1` - market disabled for trading
+* `1` - market is disabled for trading
 * `2` - incorrect amount (it is less than or equals zero or its precision is too big)
 * `3` - incorrect price (it is less than or equals zero or its precision is too big)
 * `4` - incorrect taker fee (it is less than zero or its precision is too big)
@@ -600,7 +600,7 @@ ___
 ```
 [POST] /api/v4/order/stop_market
 ```
-Creates stop-market trading order
+This endpoint creates stop-market trading order
 
 **Parameters:**
 
@@ -616,7 +616,7 @@ activation_price | String | **Yes** | Activation price in money currency. Exampl
 {
     "market": "BTC_USDT",
     "side": "buy",
-    "amount": "0.01",              // i want to buy 0.01 USDT
+    "amount": "0.01",              // I want to buy 0.01 USDT
     "activation_price": "10000",
     "request": "{{request}}",
     "nonce": "{{nonce}}"
@@ -626,7 +626,7 @@ activation_price | String | **Yes** | Activation price in money currency. Exampl
 {
     "market": "BTC_USDT",
     "side": "sell",
-    "amount": "0.01",              // i want to sell 0.01 BTC
+    "amount": "0.01",              // I want to sell 0.01 BTC
     "activation_price": "10000",
     "request": "{{request}}",
     "nonce": "{{nonce}}"
@@ -647,11 +647,11 @@ Available statuses:
     "dealMoney": "0",                  // if order finished - amount in money currency that finished
     "dealStock": "0",                  // if order finished - amount in stock currency that finished
     "left": "0.001",                   // if order not finished - rest of amount that must be finished
-    "makerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero    
+    "makerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - it will be rounded to zero    
     "market": "BTC_USDT",              // deal market
     "orderId": 4180284841,             // order id
     "side": "buy",                     // order type
-    "takerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero
+    "takerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - it will be rounded to zero
     "timestamp": 1595792396.165973,    // current timestamp
     "type": "stop market"              // order type
 }
@@ -660,7 +660,7 @@ Available statuses:
 <summary><b>Errors:</b></summary>
 
 Error codes:
-* `1` - market disabled for trading
+* `1` - market is disabled for trading
 * `2` - incorrect amount (it is less than or equals zero or its precision is too big)
 * `3` - incorrect price (it is less than or equals zero or its precision is too big)
 * `4` - incorrect taker fee (it is less than zero or its precision is too big)
@@ -786,18 +786,18 @@ Available statuses:
 
 ```json5
 {
-    "activation_price": "12000",       // activation price if activation price isset
+    "activation_price": "12000",       // activation price if activation price is set
     "amount": "0.001",                 // amount
     "dealFee": "0",                    // fee in money that you pay if order is finished
-    "dealMoney": "0",                  // if order finished - amount in money currency that finished
-    "dealStock": "0",                  // if order finished - amount in stock currency that finished
-    "left": "0.001",                   // if order not finished - rest of amount that must be finished
-    "makerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero    
+    "dealMoney": "0",                  // if order finished - amount in money currency that is finished
+    "dealStock": "0",                  // if order finished - amount in stock currency that is finished
+    "left": "0.001",                   // if order not finished - rest of the amount that must be finished
+    "makerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - it will be rounded to zero    
     "market": "BTC_USDT",              // deal market
     "orderId": 4180284841,             // order id
     "price": "9800",                   // price if price isset
     "side": "buy",                     // order type
-    "takerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - its rounded to zero
+    "takerFee": "0.001",               // maker fee ratio. If the number less than 0.0001 - it will be rounded to zero
     "timestamp": 1595792396.165973,    // current timestamp
     "type": "stop market"              // order type
 }
@@ -806,7 +806,7 @@ Available statuses:
 <summary><b>Errors:</b></summary>
 
 Error codes:
-* `1` - market disabled for trading
+* `1` - market is disabled for trading
 * `2` - incorrect amount (it is less than or equals zero or its precision is too big)
 * `3` - incorrect price (it is less than or equals zero or its precision is too big)
 * `4` - incorrect taker fee (it is less than zero or its precision is too big)
@@ -881,12 +881,12 @@ Error codes:
 
 ___
 
-### Query unexecuted orders
+### Query unexecuted(active) orders
 
 ```
 [POST] /api/v4/orders
 ```
-Returns unexecuted(active) orders
+This endpoint retrieves unexecuted orders only.
 
 **Parameters:**
 
@@ -894,7 +894,7 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 market | String | **Yes** | Available market. Example: BTC_USDT
 limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
-offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+offset | Int | **No** | If you want the request to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 **Request BODY raw:**
 ```json5
@@ -916,12 +916,12 @@ offset | Int | **No** | If you want the query to return entries starting from a 
         "dealMoney": "0",                 // executed amount in money
         "dealStock": "0",                 // executed amount in stock
         "left": "2.241379",               // unexecuted amount in stock
-        "makerFee": "0.001",              // maker fee ratio. If the number less than 0.0001 - its rounded to zero    
+        "makerFee": "0.001",              // maker fee ratio. If the number less than 0.0001 - it will be rounded to zero    
         "market": "BTC_USDT",             // currency market
         "orderId": 3686033640,            // unexecuted order ID
         "price": "7900",                  // unexecuted order price
         "side": "buy",                    // type of order
-        "takerFee": "0.001",              // taker fee ratio. If the number less than 0.0001 - its rounded to zero    
+        "takerFee": "0.001",              // taker fee ratio. If the number less than 0.0001 - it will be rounded to zero    
         "timestamp": 1594605801.49815,    // current timestamp of unexecuted order
         "type": "limit"                   // unexecuted order type
     },
@@ -1010,15 +1010,15 @@ ___
 ```
 [POST] /api/v4/trade-account/executed-history
 ```
-Returns orders history sorted by single market if it needed
+This endpoint retrieves the orders history. Can be sorted by single market if needed.
 
 **Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-market | String | **No** | Requested available market. Example: BTC_USDT
+market | String | **No** | Requested market. Example: BTC_USDT
 limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
-offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+offset | Int | **No** | If you want the request to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 **Request BODY raw:**
 ```json5
@@ -1037,12 +1037,12 @@ offset | Int | **No** | If you want the query to return entries starting from a 
         {
             "amount": "0.000076",         // amount in stock
             "deal": "0.70407996",         // amount in money
-            "fee": "0.00070407996",       // fee that you pay 
+            "fee": "0.00070407996",       // paid fee 
             "id": 160305483,              // orderID
             "price": "9264.21",           // price
             "role": 2,                    // Role - 1 - maker, 2 - taker
             "side": "sell",               // Order side "sell" / "buy"
-            "time": 1594667731.724403     // Timestamp of executed order
+            "time": 1594667731.724403     // Timestamp of the executed order
         },
         {...}
     ],
@@ -1093,7 +1093,7 @@ ___
 ```
 [POST] /api/v4/trade-account/order
 ```
-Returns more detail order deals history 
+This endpoint retrieves more details on order deals history.
 
 **Parameters:**
 
@@ -1101,7 +1101,7 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 orderId | Int | **Yes** | Order ID. Example: 1234
 limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
-offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+offset | Int | **No** | If you want the request to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 **Request BODY raw:**
 ```json5
@@ -1116,7 +1116,7 @@ offset | Int | **No** | If you want the query to return entries starting from a 
 
 **Response:**
 
-Empty response if order not yours
+Empty response if order is not yours
 ```json5
 {
     "result": {
@@ -1126,9 +1126,9 @@ Empty response if order not yours
             {
                 "amount": "598",                // amount in stock
                 "deal": "0.00419198",           // amount in money
-                "dealOrderId": 3134995325,      // completed order ID
+                "dealOrderId": 3134995325,      // completed order Id
                 "fee": "0.00000419198",         // fee that you pay 
-                "id": 149156519,                // id of trade
+                "id": 149156519,                // trade id
                 "price": "0.00000701",          // price
                 "role": 2,                      // Role - 1 - maker, 2 - taker
                 "time": 1593342324.613711       // Timestamp of executed order
@@ -1205,7 +1205,7 @@ ___
 ```
 [POST] /api/v4/trade-account/order/history
 ```
-Returns executed order history by market
+This endpoint retrieves executed order history by market.
 
 **Parameters:**
 
@@ -1213,7 +1213,7 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 market | String | **No** | Requested available market. Example: BTC_USDT
 limit | Int | **No** | LIMIT is a special clause used to limit records a particular query can return. Default: 50, Min: 1, Max: 100
-offset | Int | **No** | If you want the query to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
+offset | Int | **No** | If you want the request to return entries starting from a particular line, you can use OFFSET clause to tell it where it should start. Default: 0, Min: 0, Max: 10000
 
 **Request BODY raw:**
 ```json5
@@ -1228,14 +1228,14 @@ offset | Int | **No** | If you want the query to return entries starting from a 
 
 **Response:**
 
-Empty response if order not yours
+Empty response if order is not yours
 ```json5
 {
     "BTC_USDT": [
         {
             "amount": "0.020159",             // amount of trade
             "ctime": 1597486960.311311,       // timestamp of order creation
-            "dealFee": "0",                   // fee in money that you pay if order is finished
+            "dealFee": "0",                   // paid fee if order is finished
             "dealMoney": "239.83908183",      // amount in money currency that finished
             "dealStock": "0.020159",          // amount in stock currency that finished
             "ftime": 1597486960.311332,       // executed order timestamp
